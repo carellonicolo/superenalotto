@@ -133,19 +133,8 @@ const Schedina: React.FC<SchedinaProps> = ({
           }}
         >
           {/* Logo row */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1">
-              <span
-                className="text-[10px] font-bold uppercase tracking-wider"
-                style={{ color: '#a5d6a7', fontFamily: 'Arial, sans-serif' }}
-              >
-                NUOVO
-              </span>
-            </div>
-            <div className="flex items-center">
-              <img src={superenalottoLogo} alt="SuperEnalotto" className="h-10 sm:h-14" />
-            </div>
-
+          <div className="flex items-center justify-center">
+            <img src={superenalottoLogo} alt="SuperEnalotto" className="h-10 sm:h-14" />
           </div>
 
           {/* Instructions text */}
