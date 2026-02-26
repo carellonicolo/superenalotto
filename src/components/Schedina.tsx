@@ -143,22 +143,7 @@ const Schedina: React.FC<SchedinaProps> = ({
               </span>
             </div>
             <div className="flex items-center">
-              {/* SuperEnalotto logo text */}
-              <span
-                style={{
-                  fontFamily: '"Georgia", "Times New Roman", serif',
-                  fontStyle: 'italic',
-                  fontWeight: 700,
-                  fontSize: 'clamp(20px, 4vw, 32px)',
-                  color: '#fff',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1,
-                }}
-              >
-                <span style={{ color: '#c41e2a', fontWeight: 900 }}>S</span>
-                <span style={{ color: '#fff' }}>uper</span>
-                <span style={{ color: '#1a237e', fontWeight: 900 }}>Enalotto</span>
-              </span>
+              <img src={superenalottoLogo} alt="SuperEnalotto" className="h-10 sm:h-14" />
             </div>
 
             {/* SuperStar badge */}
