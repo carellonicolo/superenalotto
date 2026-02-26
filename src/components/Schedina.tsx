@@ -37,6 +37,14 @@ const Schedina: React.FC<SchedinaProps> = ({
     onColumnsChange(newColumns);
   };
 
+  const handleToggleSuperstar = (colIdx: number, num: number) => {
+    const newColumns = [...columns];
+    const col = { ...newColumns[colIdx] };
+    col.superstar = col.superstar === num ? null : num;
+    newColumns[colIdx] = col;
+    onColumnsChange(newColumns);
+  };
+
   const handleQuickPick = (colIdx: number) => {
     const nums: number[] = [];
     const pool = Array.from({ length: 90 }, (_, i) => i + 1);
@@ -46,13 +54,13 @@ const Schedina: React.FC<SchedinaProps> = ({
       pool.splice(idx, 1);
     }
     const newColumns = [...columns];
-    newColumns[colIdx] = { numbers: nums.sort((a, b) => a - b) };
+    newColumns[colIdx] = { numbers: nums.sort((a, b) => a - b), superstar: columns[colIdx].superstar };
     onColumnsChange(newColumns);
   };
 
   const handleClear = (colIdx: number) => {
     const newColumns = [...columns];
-    newColumns[colIdx] = { numbers: [] };
+    newColumns[colIdx] = { numbers: [], superstar: null };
     onColumnsChange(newColumns);
   };
 
@@ -65,13 +73,13 @@ const Schedina: React.FC<SchedinaProps> = ({
         nums.push(pool[idx]);
         pool.splice(idx, 1);
       }
-      return { numbers: nums.sort((a, b) => a - b) };
+      return { numbers: nums.sort((a, b) => a - b), superstar: null };
     });
     onColumnsChange(newColumns);
   };
 
   const handleClearAll = () => {
-    onColumnsChange(columns.map(() => ({ numbers: [] })));
+    onColumnsChange(columns.map(() => ({ numbers: [], superstar: null })));
   };
 
   const hasAnySelection = columns.some((c) => c.numbers.length === 6);
@@ -197,6 +205,8 @@ const Schedina: React.FC<SchedinaProps> = ({
                         onToggleNumber={(num) => handleToggleNumber(col1Idx, num)}
                         matchedNumbers={matchedByColumn[col1Idx] || []}
                         disabled={disabled}
+                        superstarSelected={columns[col1Idx].superstar}
+                        onToggleSuperstar={(num) => handleToggleSuperstar(col1Idx, num)}
                       />
                       {/* Quick actions under each column */}
                       <div className="flex gap-0.5 justify-center">
@@ -231,6 +241,8 @@ const Schedina: React.FC<SchedinaProps> = ({
                         onToggleNumber={(num) => handleToggleNumber(col2Idx, num)}
                         matchedNumbers={matchedByColumn[col2Idx] || []}
                         disabled={disabled}
+                        superstarSelected={columns[col2Idx].superstar}
+                        onToggleSuperstar={(num) => handleToggleSuperstar(col2Idx, num)}
                       />
                       <div className="flex gap-0.5 justify-center">
                         <button
@@ -299,7 +311,7 @@ const Schedina: React.FC<SchedinaProps> = ({
 
           <div className="text-xs font-bold" style={{ color: '#333', fontFamily: 'Arial, sans-serif' }}>
             Colonne: <span style={{ color: '#c41e2a' }}>{filledColumns}/8</span> ·
-            Costo: <span style={{ color: '#c41e2a' }}>€{filledColumns},00</span>
+            Costo: <span style={{ color: '#c41e2a' }}>€{filledColumns + columns.filter(c => c.superstar != null).length * 0.5},00</span>
           </div>
 
           <div className="flex items-center gap-1" style={{ color: '#999', fontSize: '9px' }}>

@@ -2,6 +2,7 @@
 
 export interface ColumnSelection {
   numbers: number[]; // 6 numbers from 1-90
+  superstar?: number | null; // optional SuperStar number 1-90
 }
 
 export interface ExtractionResult {
@@ -135,7 +136,7 @@ export function generateExtraction(): ExtractionResult {
 export function checkMatches(column: ColumnSelection, extraction: ExtractionResult): MatchResult & { columnIndex: number } {
   const matched = column.numbers.filter(n => extraction.numbers.includes(n));
   const jollyMatch = column.numbers.includes(extraction.jolly);
-  const superstarMatch = column.numbers.includes(extraction.superstar);
+  const superstarMatch = column.superstar != null && column.superstar === extraction.superstar;
 
   let category: WinCategory | null = null;
   if (matched.length === 6) category = '6';
