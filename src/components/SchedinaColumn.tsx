@@ -158,18 +158,16 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
         {showSuperstarPicker && onToggleSuperstar && (
           <div
             className={cn(
-              "absolute right-full mr-1 z-50 p-3 rounded-lg shadow-xl border-2 border-amber-400",
+              "absolute right-full mr-1 z-50 p-4 rounded-lg shadow-xl border-2 border-amber-400",
               columnIndex >= 2 ? "bottom-0" : "top-0"
             )}
             style={{
               background: 'linear-gradient(180deg, #fffde7 0%, #fff9c4 100%)',
-              width: '280px',
-              maxHeight: '300px',
-              overflowY: 'auto',
+              width: '360px',
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-xs font-black text-center mb-2" style={{ color: '#c41e2a' }}>
+            <div className="text-sm font-black text-center mb-3" style={{ color: '#c41e2a' }}>
               ★ SUPERSTAR ★
             </div>
             <div className="space-y-1">
