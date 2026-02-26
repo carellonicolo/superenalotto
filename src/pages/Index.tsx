@@ -15,10 +15,19 @@ import {
   AVERAGE_PRIZES,
 } from '@/lib/superenalotto';
 
-const INITIAL_COLUMNS: ColumnSelection[] = Array.from({ length: 4 }, () => ({ numbers: [], superstar: null }));
+const PANEL_COUNT = 4;
+const EMPTY_COL = (): ColumnSelection => ({ numbers: [], superstar: null as number | null });
+const normalizeColumns = (cols: ColumnSelection[]): ColumnSelection[] => {
+  const safe: ColumnSelection[] = cols.slice(0, PANEL_COUNT).map(c => ({
+    numbers: (c.numbers || []).slice(0, 6),
+    superstar: c.superstar ?? null,
+  } as ColumnSelection));
+  while (safe.length < PANEL_COUNT) safe.push(EMPTY_COL());
+  return safe;
+};
 
 const Index: React.FC = () => {
-  const [columns, setColumns] = useState<ColumnSelection[]>(INITIAL_COLUMNS);
+  const [columns, setColumns] = useState<ColumnSelection[]>(() => normalizeColumns(Array.from({ length: PANEL_COUNT }, EMPTY_COL)));
   const [extraction, setExtraction] = useState<ExtractionResult | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [revealedCount, setRevealedCount] = useState(0);
@@ -28,7 +37,8 @@ const Index: React.FC = () => {
   const gameIdRef = useRef(0);
 
   const handlePlay = useCallback(() => {
-    const filledColumns = columns.filter((c) => c.numbers.length === 6);
+    const safeColumns = normalizeColumns(columns);
+    const filledColumns = safeColumns.filter((c) => c.numbers.length === 6);
     if (filledColumns.length === 0) return;
 
     setIsAnimating(true);
@@ -48,13 +58,13 @@ const Index: React.FC = () => {
         clearInterval(interval);
         // Calculate matches after all revealed
         setTimeout(() => {
-          const results = columns.map((col, idx) => {
+          const results = safeColumns.map((col, idx) => {
             if (col.numbers.length !== 6) return { columnIndex: idx, matched: [], jollyMatch: false, superstarMatch: false, category: null, prize: 0 };
             const result = checkMatches(col, ext);
             return { ...result, columnIndex: idx };
           });
 
-          const matched = columns.map((col) => {
+          const matched = safeColumns.map((col) => {
             if (col.numbers.length !== 6) return [];
             return col.numbers.filter((n) => ext.numbers.includes(n));
           });
@@ -120,7 +130,7 @@ const Index: React.FC = () => {
         {/* Schedina */}
         <Schedina
           columns={columns}
-          onColumnsChange={setColumns}
+          onColumnsChange={(next) => setColumns(normalizeColumns(next))}
           onPlay={handlePlay}
           matchedByColumn={matchedByColumn}
           disabled={isAnimating}
