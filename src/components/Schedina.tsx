@@ -37,6 +37,14 @@ const Schedina: React.FC<SchedinaProps> = ({
     onColumnsChange(newColumns);
   };
 
+  const handleToggleSuperstar = (colIdx: number, num: number) => {
+    const newColumns = [...columns];
+    const col = { ...newColumns[colIdx] };
+    col.superstar = col.superstar === num ? null : num;
+    newColumns[colIdx] = col;
+    onColumnsChange(newColumns);
+  };
+
   const handleQuickPick = (colIdx: number) => {
     const nums: number[] = [];
     const pool = Array.from({ length: 90 }, (_, i) => i + 1);
