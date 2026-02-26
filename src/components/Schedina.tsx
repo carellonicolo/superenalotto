@@ -210,8 +210,8 @@ const Schedina: React.FC<SchedinaProps> = ({
             background: 'linear-gradient(180deg, #a5d6a7 0%, #81c784 30%, #66bb6a 100%)',
           }}
         >
-          {/* Panels: 4 rows, 2 columns each */}
-          <div className="space-y-2">
+          {/* Panels: 2x2 grid */}
+          <div className="grid grid-cols-2 gap-2">
             {columns.map((col, colIdx) => {
               const panelLetter = String.fromCharCode(65 + colIdx);
 
