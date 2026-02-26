@@ -3,6 +3,7 @@ import SchedinaColumn from './SchedinaColumn';
 import RegoleModal from './RegoleModal';
 import { type ColumnSelection } from '@/lib/superenalotto';
 import { Shuffle, Trash2, Play } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface SchedinaProps {
   columns: ColumnSelection[];
@@ -84,7 +85,35 @@ const Schedina: React.FC<SchedinaProps> = ({
   };
 
   const hasAnySelection = columns.some((c) => c.numbers.length === 6);
+  const hasPartial = columns.some((c) => c.numbers.length > 0 && c.numbers.length < 6);
   const filledColumns = columns.filter((c) => c.numbers.length === 6).length;
+
+  const handlePlayWithValidation = () => {
+    const partialCols = columns
+      .map((c, i) => ({ idx: i + 1, count: c.numbers.length }))
+      .filter((c) => c.count > 0 && c.count < 6);
+
+    if (partialCols.length > 0) {
+      const colNames = partialCols.map((c) => `Colonna ${c.idx} (${c.count}/6)`).join(', ');
+      toast({
+        variant: 'destructive',
+        title: '⚠️ Pannello incompleto',
+        description: `Devi selezionare esattamente 6 numeri per ogni colonna giocata. Incomplete: ${colNames}`,
+      });
+      return;
+    }
+
+    if (!hasAnySelection) {
+      toast({
+        variant: 'destructive',
+        title: '⚠️ Nessuna colonna compilata',
+        description: 'Seleziona 6 numeri su almeno una colonna per giocare.',
+      });
+      return;
+    }
+
+    onPlay();
+  };
 
   return (
     <div className="flex flex-col items-center gap-0">
@@ -328,8 +357,8 @@ const Schedina: React.FC<SchedinaProps> = ({
       {/* Play button below the schedina */}
       <div className="mt-4 flex justify-center">
         <button
-          onClick={onPlay}
-          disabled={disabled || !hasAnySelection}
+          onClick={handlePlayWithValidation}
+          disabled={disabled}
           className="px-10 py-3 rounded-xl font-black text-lg tracking-wider transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
           style={{
             background: hasAnySelection
