@@ -205,6 +205,8 @@ const Schedina: React.FC<SchedinaProps> = ({
                         onToggleNumber={(num) => handleToggleNumber(col1Idx, num)}
                         matchedNumbers={matchedByColumn[col1Idx] || []}
                         disabled={disabled}
+                        superstarSelected={columns[col1Idx].superstar}
+                        onToggleSuperstar={(num) => handleToggleSuperstar(col1Idx, num)}
                       />
                       {/* Quick actions under each column */}
                       <div className="flex gap-0.5 justify-center">
