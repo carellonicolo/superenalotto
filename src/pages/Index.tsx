@@ -16,7 +16,7 @@ import {
 } from '@/lib/superenalotto';
 
 const PANEL_COUNT = 4;
-const EMPTY_COL = (): ColumnSelection => ({ numbers: [], superstar: null });
+const EMPTY_COL = (): ColumnSelection => ({ numbers: [], superstar: null as number | null });
 const normalizeColumns = (cols: ColumnSelection[]): ColumnSelection[] => {
   const safe = cols.slice(0, PANEL_COUNT).map(c => ({
     numbers: (c.numbers || []).slice(0, 6),
