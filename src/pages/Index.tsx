@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Schedina from '@/components/Schedina';
 import Estrazione from '@/components/Estrazione';
 import ProbabilitaPanel from '@/components/ProbabilitaPanel';
-import FormuleCombinатorie from '@/components/FormuleCombinатorie';
+import FormuleCombinatorie from '@/components/FormuleCombinatorie';
 import SimulazioneVeloce from '@/components/SimulazioneVeloce';
 import StatisticheDashboard, { type GameRecord } from '@/components/StatisticheDashboard';
 import {
