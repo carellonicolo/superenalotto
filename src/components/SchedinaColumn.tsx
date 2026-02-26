@@ -157,10 +157,15 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
         {/* SuperStar picker popup */}
         {showSuperstarPicker && onToggleSuperstar && (
           <div
-            className="absolute top-0 right-full mr-1 z-50 p-3 rounded-lg shadow-xl border-2 border-amber-400"
+            className={cn(
+              "absolute right-full mr-1 z-50 p-3 rounded-lg shadow-xl border-2 border-amber-400",
+              columnIndex >= 2 ? "bottom-0" : "top-0"
+            )}
             style={{
               background: 'linear-gradient(180deg, #fffde7 0%, #fff9c4 100%)',
               width: '280px',
+              maxHeight: '300px',
+              overflowY: 'auto',
             }}
             onClick={(e) => e.stopPropagation()}
           >
