@@ -178,7 +178,7 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
                         setShowSuperstarPicker(false);
                       }}
                       className={cn(
-                        'w-5 h-5 flex items-center justify-center text-[9px] font-bold rounded-sm transition-all',
+                        'w-7 h-7 flex items-center justify-center text-[11px] font-bold rounded transition-all',
                         num === superstarSelected
                           ? 'bg-red-600 text-white shadow-sm'
                           : 'bg-white text-gray-700 hover:bg-amber-200 border border-gray-300',
