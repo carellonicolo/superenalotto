@@ -164,7 +164,7 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-[11px] font-black text-center mb-1.5" style={{ color: '#c41e2a' }}>
+            <div className="text-xs font-black text-center mb-2" style={{ color: '#c41e2a' }}>
               ★ SUPERSTAR ★
             </div>
             <div className="space-y-0.5">
