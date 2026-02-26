@@ -299,18 +299,6 @@ const Schedina: React.FC<SchedinaProps> = ({
                     </div>
                   </div>
 
-                  {/* Right side - concorso number area (decorative) */}
-                  <div
-                    className="flex flex-col items-center justify-start pt-1"
-                    style={{ minWidth: '24px' }}
-                  >
-                    <div
-                      className="text-[6px] font-bold text-center border border-gray-400 bg-white/80 px-1 py-0.5 rounded-sm"
-                      style={{ color: '#333', fontFamily: 'Arial, sans-serif' }}
-                    >
-                      {panelLetter}{panelIdx + 1}
-                    </div>
-                  </div>
                 </div>
               );
             })}
