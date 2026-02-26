@@ -15,10 +15,19 @@ import {
   AVERAGE_PRIZES,
 } from '@/lib/superenalotto';
 
-const INITIAL_COLUMNS: ColumnSelection[] = Array.from({ length: 4 }, () => ({ numbers: [], superstar: null }));
+const PANEL_COUNT = 4;
+const EMPTY_COL = (): ColumnSelection => ({ numbers: [], superstar: null });
+const normalizeColumns = (cols: ColumnSelection[]): ColumnSelection[] => {
+  const safe = cols.slice(0, PANEL_COUNT).map(c => ({
+    numbers: (c.numbers || []).slice(0, 6),
+    superstar: c.superstar ?? null,
+  }));
+  while (safe.length < PANEL_COUNT) safe.push(EMPTY_COL());
+  return safe;
+};
 
 const Index: React.FC = () => {
-  const [columns, setColumns] = useState<ColumnSelection[]>(INITIAL_COLUMNS);
+  const [columns, setColumns] = useState<ColumnSelection[]>(() => normalizeColumns(Array.from({ length: PANEL_COUNT }, EMPTY_COL)));
   const [extraction, setExtraction] = useState<ExtractionResult | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [revealedCount, setRevealedCount] = useState(0);
