@@ -3,6 +3,7 @@ import SchedinaColumn from './SchedinaColumn';
 import RegoleModal from './RegoleModal';
 import { type ColumnSelection } from '@/lib/superenalotto';
 import { Shuffle, Trash2, Play } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface SchedinaProps {
   columns: ColumnSelection[];
