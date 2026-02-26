@@ -2,6 +2,7 @@
 
 export interface ColumnSelection {
   numbers: number[]; // 6 numbers from 1-90
+  superstar?: number | null; // optional SuperStar number 1-90
 }
 
 export interface ExtractionResult {
