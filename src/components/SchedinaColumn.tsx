@@ -156,19 +156,19 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
         {/* SuperStar picker popup */}
         {showSuperstarPicker && onToggleSuperstar && (
           <div
-            className="absolute top-0 right-full mr-1 z-50 p-1.5 rounded-lg shadow-xl border-2 border-amber-400"
+            className="absolute top-0 right-full mr-1 z-50 p-2.5 rounded-lg shadow-xl border-2 border-amber-400"
             style={{
               background: 'linear-gradient(180deg, #fffde7 0%, #fff9c4 100%)',
-              width: '180px',
+              width: '220px',
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-[8px] font-black text-center mb-1" style={{ color: '#c41e2a' }}>
+            <div className="text-[11px] font-black text-center mb-1.5" style={{ color: '#c41e2a' }}>
               ★ SUPERSTAR ★
             </div>
-            <div className="space-y-px">
+            <div className="space-y-0.5">
               {superstarRows.map((row, rowIdx) => (
-                <div key={rowIdx} className="flex gap-px justify-center">
+                <div key={rowIdx} className="flex gap-0.5 justify-center">
                   {row.map((num) => (
                     <button
                       key={num}
@@ -177,7 +177,7 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
                         setShowSuperstarPicker(false);
                       }}
                       className={cn(
-                        'w-4 h-4 flex items-center justify-center text-[7px] font-bold rounded-sm transition-all',
+                        'w-5 h-5 flex items-center justify-center text-[9px] font-bold rounded-sm transition-all',
                         num === superstarSelected
                           ? 'bg-red-600 text-white shadow-sm'
                           : 'bg-white text-gray-700 hover:bg-amber-200 border border-gray-300',
@@ -195,7 +195,7 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
                   onToggleSuperstar(superstarSelected);
                   setShowSuperstarPicker(false);
                 }}
-                className="mt-1 w-full text-[7px] py-0.5 bg-gray-200 hover:bg-gray-300 rounded text-center font-bold"
+                className="mt-1.5 w-full text-[9px] py-1 bg-gray-200 hover:bg-gray-300 rounded text-center font-bold"
               >
                 Rimuovi ✕
               </button>
