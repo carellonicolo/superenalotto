@@ -119,7 +119,7 @@ const Schedina: React.FC<SchedinaProps> = ({
     <div className="flex flex-col items-center gap-0">
       {/* === SCHEDINA CARD === */}
       <div
-        className="w-full max-w-5xl rounded-xl overflow-hidden"
+        className="w-full rounded-xl overflow-hidden"
         style={{
           boxShadow: '0 8px 32px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.15)',
         }}
