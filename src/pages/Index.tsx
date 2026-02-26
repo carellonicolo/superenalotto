@@ -58,13 +58,13 @@ const Index: React.FC = () => {
         clearInterval(interval);
         // Calculate matches after all revealed
         setTimeout(() => {
-          const results = columns.map((col, idx) => {
+          const results = safeColumns.map((col, idx) => {
             if (col.numbers.length !== 6) return { columnIndex: idx, matched: [], jollyMatch: false, superstarMatch: false, category: null, prize: 0 };
             const result = checkMatches(col, ext);
             return { ...result, columnIndex: idx };
           });
 
-          const matched = columns.map((col) => {
+          const matched = safeColumns.map((col) => {
             if (col.numbers.length !== 6) return [];
             return col.numbers.filter((n) => ext.numbers.includes(n));
           });
