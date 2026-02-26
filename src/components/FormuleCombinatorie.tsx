@@ -85,4 +85,4 @@ const FormulaRow: React.FC<{ label: string; formula: string; result: string; col
   </div>
 );
 
-export default FormuleCombinатorie;
+export default FormuleCombinatorie;
