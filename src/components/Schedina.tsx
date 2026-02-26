@@ -54,13 +54,13 @@ const Schedina: React.FC<SchedinaProps> = ({
       pool.splice(idx, 1);
     }
     const newColumns = [...columns];
-    newColumns[colIdx] = { numbers: nums.sort((a, b) => a - b) };
+    newColumns[colIdx] = { numbers: nums.sort((a, b) => a - b), superstar: columns[colIdx].superstar };
     onColumnsChange(newColumns);
   };
 
   const handleClear = (colIdx: number) => {
     const newColumns = [...columns];
-    newColumns[colIdx] = { numbers: [] };
+    newColumns[colIdx] = { numbers: [], superstar: null };
     onColumnsChange(newColumns);
   };
 
