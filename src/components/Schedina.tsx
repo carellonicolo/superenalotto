@@ -212,14 +212,11 @@ const Schedina: React.FC<SchedinaProps> = ({
         >
           {/* Panels: 4 rows, 2 columns each */}
           <div className="space-y-2">
-            {[0, 1, 2, 3].map((panelIdx) => {
-              const col1Idx = panelIdx * 2;
-              const col2Idx = panelIdx * 2 + 1;
-              const panelLetter = String.fromCharCode(65 + panelIdx); // A, B, C, D
+            {columns.map((col, colIdx) => {
+              const panelLetter = String.fromCharCode(65 + colIdx);
 
               return (
-                <div key={panelIdx} className="flex gap-1 items-start">
-                  {/* Dot marker */}
+                <div key={colIdx} className="flex gap-1 items-start">
                   <div className="flex flex-col items-center justify-center gap-1 pt-2">
                     <div
                       className="w-2 h-2 rounded-full"
@@ -227,78 +224,39 @@ const Schedina: React.FC<SchedinaProps> = ({
                     />
                   </div>
 
-                  {/* Two columns side by side */}
-                  <div className="flex-1 grid grid-cols-2 gap-1">
-                    {/* Column 1 */}
-                    <div className="flex flex-col gap-0.5">
-                      <SchedinaColumn
-                        columnIndex={col1Idx}
-                        panelLabel={`PANNELLO ${panelLetter}`}
-                        selectedNumbers={columns[col1Idx].numbers}
-                        onToggleNumber={(num) => handleToggleNumber(col1Idx, num)}
-                        matchedNumbers={matchedByColumn[col1Idx] || []}
+                  <div className="flex-1 flex flex-col gap-0.5">
+                    <SchedinaColumn
+                      columnIndex={colIdx}
+                      panelLabel={`PANNELLO ${panelLetter}`}
+                      selectedNumbers={col.numbers}
+                      onToggleNumber={(num) => handleToggleNumber(colIdx, num)}
+                      matchedNumbers={matchedByColumn[colIdx] || []}
+                      disabled={disabled}
+                      superstarSelected={col.superstar}
+                      onToggleSuperstar={(num) => handleToggleSuperstar(colIdx, num)}
+                    />
+                    <div className="flex gap-0.5 justify-center">
+                      <button
+                        onClick={() => handleQuickPick(colIdx)}
                         disabled={disabled}
-                        superstarSelected={columns[col1Idx].superstar}
-                        onToggleSuperstar={(num) => handleToggleSuperstar(col1Idx, num)}
-                      />
-                      {/* Quick actions under each column */}
-                      <div className="flex gap-0.5 justify-center">
-                        <button
-                          onClick={() => handleQuickPick(col1Idx)}
-                          disabled={disabled}
-                          className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
-                          title="Casuale"
-                        >
-                          <Shuffle className="w-2 h-2" /> Auto
-                        </button>
-                        <button
-                          onClick={() => handleClear(col1Idx)}
-                          disabled={disabled}
-                          className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
-                          title="Cancella"
-                        >
-                          <Trash2 className="w-2 h-2" /> ✕
-                        </button>
-                        <span className="text-[7px] font-bold px-1 py-0.5" style={{ color: columns[col1Idx].numbers.length === 6 ? '#c41e2a' : '#333' }}>
-                          {columns[col1Idx].numbers.length}/6
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Column 2 */}
-                    <div className="flex flex-col gap-0.5">
-                      <SchedinaColumn
-                        columnIndex={col2Idx}
-                        panelLabel=""
-                        selectedNumbers={columns[col2Idx].numbers}
-                        onToggleNumber={(num) => handleToggleNumber(col2Idx, num)}
-                        matchedNumbers={matchedByColumn[col2Idx] || []}
+                        className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
+                        title="Casuale"
+                      >
+                        <Shuffle className="w-2 h-2" /> Auto
+                      </button>
+                      <button
+                        onClick={() => handleClear(colIdx)}
                         disabled={disabled}
-                        superstarSelected={columns[col2Idx].superstar}
-                        onToggleSuperstar={(num) => handleToggleSuperstar(col2Idx, num)}
-                      />
-                      <div className="flex gap-0.5 justify-center">
-                        <button
-                          onClick={() => handleQuickPick(col2Idx)}
-                          disabled={disabled}
-                          className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
-                        >
-                          <Shuffle className="w-2 h-2" /> Auto
-                        </button>
-                        <button
-                          onClick={() => handleClear(col2Idx)}
-                          disabled={disabled}
-                          className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
-                        >
-                          <Trash2 className="w-2 h-2" /> ✕
-                        </button>
-                        <span className="text-[7px] font-bold px-1 py-0.5" style={{ color: columns[col2Idx].numbers.length === 6 ? '#c41e2a' : '#333' }}>
-                          {columns[col2Idx].numbers.length}/6
-                        </span>
-                      </div>
+                        className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
+                        title="Cancella"
+                      >
+                        <Trash2 className="w-2 h-2" /> ✕
+                      </button>
+                      <span className="text-[7px] font-bold px-1 py-0.5" style={{ color: col.numbers.length === 6 ? '#c41e2a' : '#333' }}>
+                        {col.numbers.length}/6
+                      </span>
                     </div>
                   </div>
-
                 </div>
               );
             })}
@@ -331,7 +289,7 @@ const Schedina: React.FC<SchedinaProps> = ({
           </div>
 
           <div className="text-xs font-bold" style={{ color: '#333', fontFamily: 'Arial, sans-serif' }}>
-            Colonne: <span style={{ color: '#c41e2a' }}>{filledColumns}/8</span> ·
+            Colonne: <span style={{ color: '#c41e2a' }}>{filledColumns}/4</span> ·
             Costo: <span style={{ color: '#c41e2a' }}>€{filledColumns + columns.filter(c => c.superstar != null).length * 0.5},00</span>
           </div>
 
