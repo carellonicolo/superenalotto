@@ -172,7 +172,7 @@ const Index: React.FC = () => {
           </TabsContent>
 
           <TabsContent value="formule">
-            <FormuleCombinатorie />
+            <FormuleCombinatorie />
           </TabsContent>
 
           <TabsContent value="simulazione">
