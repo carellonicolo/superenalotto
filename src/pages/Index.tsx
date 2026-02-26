@@ -130,7 +130,7 @@ const Index: React.FC = () => {
         {/* Schedina */}
         <Schedina
           columns={columns}
-          onColumnsChange={setColumns}
+          onColumnsChange={(next) => setColumns(normalizeColumns(next))}
           onPlay={handlePlay}
           matchedByColumn={matchedByColumn}
           disabled={isAnimating}
