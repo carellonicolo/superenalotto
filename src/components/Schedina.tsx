@@ -357,8 +357,8 @@ const Schedina: React.FC<SchedinaProps> = ({
       {/* Play button below the schedina */}
       <div className="mt-4 flex justify-center">
         <button
-          onClick={onPlay}
-          disabled={disabled || !hasAnySelection}
+          onClick={handlePlayWithValidation}
+          disabled={disabled}
           className="px-10 py-3 rounded-xl font-black text-lg tracking-wider transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
           style={{
             background: hasAnySelection
