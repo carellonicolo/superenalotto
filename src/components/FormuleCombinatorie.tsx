@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { binomial, formatNumber } from '@/lib/superenalotto';
 import { BookOpen } from 'lucide-react';
 
-const FormuleCombinатorie: React.FC = () => {
+const FormuleCombinatorie: React.FC = () => {
   return (
     <Card className="border-2 border-blue-300 bg-blue-50/50">
       <CardHeader className="pb-3">
