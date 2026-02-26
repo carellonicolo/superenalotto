@@ -15,7 +15,7 @@ import {
   AVERAGE_PRIZES,
 } from '@/lib/superenalotto';
 
-const INITIAL_COLUMNS: ColumnSelection[] = Array.from({ length: 8 }, () => ({ numbers: [] }));
+const INITIAL_COLUMNS: ColumnSelection[] = Array.from({ length: 8 }, () => ({ numbers: [], superstar: null }));
 
 const Index: React.FC = () => {
   const [columns, setColumns] = useState<ColumnSelection[]>(INITIAL_COLUMNS);

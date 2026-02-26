@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface SchedinaColumnProps {
@@ -22,17 +22,31 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
   superstarSelected = null,
   onToggleSuperstar,
 }) => {
+  const [showSuperstarPicker, setShowSuperstarPicker] = useState(false);
   const isSelected = (n: number) => selectedNumbers.includes(n);
   const isMatched = (n: number) => matchedNumbers.includes(n);
 
   // 6 rows x 15 columns = 90 numbers, like real ticket
   const rows = [
-    Array.from({ length: 15 }, (_, i) => i + 1),      // 1-15
-    Array.from({ length: 15 }, (_, i) => i + 16),     // 16-30
-    Array.from({ length: 15 }, (_, i) => i + 31),     // 31-45
-    Array.from({ length: 15 }, (_, i) => i + 46),     // 46-60
-    Array.from({ length: 15 }, (_, i) => i + 61),     // 61-75
-    Array.from({ length: 15 }, (_, i) => i + 76),     // 76-90
+    Array.from({ length: 15 }, (_, i) => i + 1),
+    Array.from({ length: 15 }, (_, i) => i + 16),
+    Array.from({ length: 15 }, (_, i) => i + 31),
+    Array.from({ length: 15 }, (_, i) => i + 46),
+    Array.from({ length: 15 }, (_, i) => i + 61),
+    Array.from({ length: 15 }, (_, i) => i + 76),
+  ];
+
+  const superstarRows = [
+    Array.from({ length: 9 }, (_, i) => i + 1),
+    Array.from({ length: 9 }, (_, i) => i + 10),
+    Array.from({ length: 9 }, (_, i) => i + 19),
+    Array.from({ length: 9 }, (_, i) => i + 28),
+    Array.from({ length: 9 }, (_, i) => i + 37),
+    Array.from({ length: 9 }, (_, i) => i + 46),
+    Array.from({ length: 9 }, (_, i) => i + 55),
+    Array.from({ length: 9 }, (_, i) => i + 64),
+    Array.from({ length: 9 }, (_, i) => i + 73),
+    Array.from({ length: 9 }, (_, i) => i + 82).filter(n => n <= 90),
   ];
 
   return (
@@ -101,11 +115,12 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
 
       {/* SuperStar mini section */}
       <div
-        className="flex flex-col items-center justify-start px-0.5 py-0.5 rounded-r"
+        className="relative flex flex-col items-center justify-start px-0.5 py-0.5 rounded-r cursor-pointer"
         style={{
           background: 'linear-gradient(180deg, #ffd700 0%, #f0c800 100%)',
           minWidth: '28px',
         }}
+        onClick={() => !disabled && setShowSuperstarPicker(!showSuperstarPicker)}
       >
         <div
           className="text-[6px] font-black text-center leading-tight mb-0.5"
@@ -121,6 +136,72 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
         <div className="text-[5px] text-center text-red-700" style={{ lineHeight: 1 }}>
           ★
         </div>
+        {superstarSelected != null && (
+          <div
+            className="mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-[7px] font-black text-white"
+            style={{
+              background: 'linear-gradient(135deg, #ff4444, #8b0000)',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+            }}
+          >
+            {superstarSelected}
+          </div>
+        )}
+        {!superstarSelected && (
+          <div className="mt-0.5 text-[5px] text-center font-bold" style={{ color: '#8b0000' }}>
+            Scegli
+          </div>
+        )}
+
+        {/* SuperStar picker popup */}
+        {showSuperstarPicker && onToggleSuperstar && (
+          <div
+            className="absolute top-0 right-full mr-1 z-50 p-1.5 rounded-lg shadow-xl border-2 border-amber-400"
+            style={{
+              background: 'linear-gradient(180deg, #fffde7 0%, #fff9c4 100%)',
+              width: '180px',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-[8px] font-black text-center mb-1" style={{ color: '#c41e2a' }}>
+              ★ SUPERSTAR ★
+            </div>
+            <div className="space-y-px">
+              {superstarRows.map((row, rowIdx) => (
+                <div key={rowIdx} className="flex gap-px justify-center">
+                  {row.map((num) => (
+                    <button
+                      key={num}
+                      onClick={() => {
+                        onToggleSuperstar(num);
+                        setShowSuperstarPicker(false);
+                      }}
+                      className={cn(
+                        'w-4 h-4 flex items-center justify-center text-[7px] font-bold rounded-sm transition-all',
+                        num === superstarSelected
+                          ? 'bg-red-600 text-white shadow-sm'
+                          : 'bg-white text-gray-700 hover:bg-amber-200 border border-gray-300',
+                      )}
+                    >
+                      {num}
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
+            {superstarSelected != null && (
+              <button
+                onClick={() => {
+                  onToggleSuperstar(superstarSelected);
+                  setShowSuperstarPicker(false);
+                }}
+                className="mt-1 w-full text-[7px] py-0.5 bg-gray-200 hover:bg-gray-300 rounded text-center font-bold"
+              >
+                Rimuovi ✕
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
