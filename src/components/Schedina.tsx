@@ -1,5 +1,6 @@
 import React from 'react';
 import SchedinaColumn from './SchedinaColumn';
+import RegoleModal from './RegoleModal';
 import { type ColumnSelection } from '@/lib/superenalotto';
 import { Shuffle, Trash2, Play } from 'lucide-react';
 
@@ -156,17 +157,20 @@ const Schedina: React.FC<SchedinaProps> = ({
           </div>
 
           {/* Instructions text */}
-          <div
-            className="text-center mt-1"
-            style={{
-              color: '#e8f5e9',
-              fontSize: '7px',
-              fontFamily: 'Arial, sans-serif',
-              letterSpacing: '0.05em',
-              textTransform: 'uppercase',
-            }}
-          >
-            SCEGLI ALMENO 6 NUMERI SU PRIMO O SU ENTRAMBI I PANNELLI ROSSI
+          <div className="flex items-center justify-between mt-1">
+            <div />
+            <div
+              style={{
+                color: '#e8f5e9',
+                fontSize: '7px',
+                fontFamily: 'Arial, sans-serif',
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+              }}
+            >
+              SCEGLI ALMENO 6 NUMERI SU PRIMO O SU ENTRAMBI I PANNELLI ROSSI
+            </div>
+            <RegoleModal />
           </div>
         </div>
 
