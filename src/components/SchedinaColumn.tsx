@@ -91,16 +91,16 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
                     className={cn(
                       'flex-1 aspect-square flex items-center justify-center border border-gray-200 transition-all duration-75',
                       'hover:bg-green-200 focus:outline-none',
-                      'text-[8px] sm:text-[9px] lg:text-[10px] font-semibold leading-none',
+                      'text-[9px] sm:text-[11px] lg:text-[12px] font-medium leading-none',
                       selected && !matched && 'bg-red-600 text-white border-red-600',
                       matched && 'bg-green-500 text-white border-green-600 ring-1 ring-green-400',
                       !selected && !matched && 'text-gray-800 bg-white',
                       cantSelect && !selected && 'opacity-30 cursor-not-allowed',
                     )}
                     style={{
-                      fontFamily: '"Arial Narrow", Arial, sans-serif',
-                      minWidth: '14px',
-                      minHeight: '13px',
+                      fontFamily: '"Inter", "SF Pro Display", system-ui, sans-serif',
+                      minWidth: '16px',
+                      minHeight: '15px',
                       padding: '1px',
                     }}
                   >
