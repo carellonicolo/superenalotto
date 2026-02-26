@@ -240,7 +240,7 @@ const Schedina: React.FC<SchedinaProps> = ({
                     <div className="flex flex-col gap-0.5">
                       <SchedinaColumn
                         columnIndex={col2Idx}
-                        panelLabel={`PANNELLO ${panelLetter}`}
+                        panelLabel=""
                         selectedNumbers={columns[col2Idx].numbers}
                         onToggleNumber={(num) => handleToggleNumber(col2Idx, num)}
                         matchedNumbers={matchedByColumn[col2Idx] || []}
