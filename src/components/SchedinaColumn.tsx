@@ -115,15 +115,15 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
 
       {/* SuperStar mini section */}
       <div
-        className="relative flex flex-col items-center justify-start px-0.5 py-0.5 rounded-r cursor-pointer"
+        className="relative flex flex-col items-center justify-start px-1 py-1 rounded-r cursor-pointer"
         style={{
           background: 'linear-gradient(180deg, #ffd700 0%, #f0c800 100%)',
-          minWidth: '28px',
+          minWidth: '38px',
         }}
         onClick={() => !disabled && setShowSuperstarPicker(!showSuperstarPicker)}
       >
         <div
-          className="text-[6px] font-black text-center leading-tight mb-0.5"
+          className="text-[9px] font-black text-center leading-tight mb-1"
           style={{
             color: '#c41e2a',
             fontFamily: '"Arial Black", Arial, sans-serif',
@@ -133,22 +133,22 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
           <br />
           Star
         </div>
-        <div className="text-[5px] text-center text-red-700" style={{ lineHeight: 1 }}>
+        <div className="text-sm text-center text-red-700" style={{ lineHeight: 1 }}>
           ★
         </div>
         {superstarSelected != null && (
           <div
-            className="mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-[7px] font-black text-white"
+            className="mt-1 w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-black text-white"
             style={{
               background: 'linear-gradient(135deg, #ff4444, #8b0000)',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.35)',
             }}
           >
             {superstarSelected}
           </div>
         )}
         {!superstarSelected && (
-          <div className="mt-0.5 text-[5px] text-center font-bold" style={{ color: '#8b0000' }}>
+          <div className="mt-1 text-[7px] text-center font-bold" style={{ color: '#8b0000' }}>
             Scegli
           </div>
         )}
