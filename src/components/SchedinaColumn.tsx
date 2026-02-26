@@ -51,24 +51,25 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
 
   return (
     <div className="flex">
-      {/* Panel label on the left - vertical */}
-      <div
-        className="flex items-center justify-center px-0.5 rounded-l"
-        style={{
-          writingMode: 'vertical-rl',
-          textOrientation: 'mixed',
-          transform: 'rotate(180deg)',
-          background: '#d42f2f',
-          color: '#fff',
-          fontFamily: '"Arial Black", Arial, sans-serif',
-          fontSize: '8px',
-          fontWeight: 900,
-          letterSpacing: '0.15em',
-          minWidth: '14px',
-        }}
-      >
-        {panelLabel}
-      </div>
+      {panelLabel ? (
+        <div
+          className="flex items-center justify-center px-0.5 rounded-l"
+          style={{
+            writingMode: 'vertical-rl',
+            textOrientation: 'mixed',
+            transform: 'rotate(180deg)',
+            background: '#d42f2f',
+            color: '#fff',
+            fontFamily: '"Arial Black", Arial, sans-serif',
+            fontSize: '8px',
+            fontWeight: 900,
+            letterSpacing: '0.15em',
+            minWidth: '14px',
+          }}
+        >
+          {panelLabel}
+        </div>
+      ) : null}
 
       {/* Number grid */}
       <div className="flex-1">
