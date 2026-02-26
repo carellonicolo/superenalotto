@@ -241,6 +241,8 @@ const Schedina: React.FC<SchedinaProps> = ({
                         onToggleNumber={(num) => handleToggleNumber(col2Idx, num)}
                         matchedNumbers={matchedByColumn[col2Idx] || []}
                         disabled={disabled}
+                        superstarSelected={columns[col2Idx].superstar}
+                        onToggleSuperstar={(num) => handleToggleSuperstar(col2Idx, num)}
                       />
                       <div className="flex gap-0.5 justify-center">
                         <button
