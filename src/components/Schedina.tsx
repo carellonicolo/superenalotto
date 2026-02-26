@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SchedinaColumn from './SchedinaColumn';
 import { type ColumnSelection } from '@/lib/superenalotto';
-import { Button } from '@/components/ui/button';
 import { Shuffle, Trash2, Play } from 'lucide-react';
 
 interface SchedinaProps {
@@ -11,6 +10,13 @@ interface SchedinaProps {
   matchedByColumn?: number[][];
   disabled?: boolean;
 }
+
+const PANEL_LABELS = [
+  'PANNELLO A', 'PANNELLO A',
+  'PANNELLO B', 'PANNELLO B',
+  'PANNELLO C', 'PANNELLO C',
+  'PANNELLO D', 'PANNELLO D',
+];
 
 const Schedina: React.FC<SchedinaProps> = ({
   columns,
@@ -72,152 +78,259 @@ const Schedina: React.FC<SchedinaProps> = ({
   const filledColumns = columns.filter((c) => c.numbers.length === 6).length;
 
   return (
-    <div className="flex flex-col items-center gap-3">
-      {/* Schedina header */}
+    <div className="flex flex-col items-center gap-0">
+      {/* === SCHEDINA CARD === */}
       <div
-        className="w-full max-w-5xl rounded-t-lg px-4 py-3 text-center relative overflow-hidden"
+        className="w-full max-w-5xl rounded-xl overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #1a3a6b 0%, #0d2240 100%)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.15)',
         }}
       >
-        <div className="flex items-center justify-center gap-3">
-          <div
-            className="text-2xl sm:text-3xl font-black tracking-widest"
-            style={{
-              color: '#ffd700',
-              fontFamily: '"Arial Black", Impact, sans-serif',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-            }}
-          >
-            SUPER
-          </div>
-          <div
-            className="text-2xl sm:text-3xl font-black tracking-widest"
-            style={{
-              color: '#ff0000',
-              fontFamily: '"Arial Black", Impact, sans-serif',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-            }}
-          >
-            ENALOTTO
-          </div>
-        </div>
+        {/* Header - Green bar with logo */}
         <div
-          className="text-[10px] tracking-[0.3em] mt-1"
-          style={{ color: '#aac4e8', fontFamily: 'Arial, sans-serif' }}
+          className="relative px-4 py-3"
+          style={{
+            background: 'linear-gradient(180deg, #4caf50 0%, #2e7d32 40%, #1b5e20 100%)',
+          }}
         >
-          SIMULATORE DIDATTICO
+          {/* Logo row */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              <span
+                className="text-[10px] font-bold uppercase tracking-wider"
+                style={{ color: '#a5d6a7', fontFamily: 'Arial, sans-serif' }}
+              >
+                NUOVO
+              </span>
+            </div>
+            <div className="flex items-center">
+              {/* SuperEnalotto logo text */}
+              <span
+                style={{
+                  fontFamily: '"Georgia", "Times New Roman", serif',
+                  fontStyle: 'italic',
+                  fontWeight: 700,
+                  fontSize: 'clamp(20px, 4vw, 32px)',
+                  color: '#fff',
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1,
+                }}
+              >
+                <span style={{ color: '#c41e2a', fontWeight: 900 }}>S</span>
+                <span style={{ color: '#fff' }}>uper</span>
+                <span style={{ color: '#1a237e', fontWeight: 900 }}>Enalotto</span>
+              </span>
+            </div>
+
+            {/* SuperStar badge */}
+            <div
+              className="px-3 py-1 rounded-md flex items-center gap-1"
+              style={{
+                background: 'linear-gradient(180deg, #fff9c4, #fdd835)',
+                border: '2px solid #f9a825',
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: '"Georgia", serif',
+                  fontWeight: 700,
+                  fontStyle: 'italic',
+                  fontSize: 'clamp(10px, 2vw, 16px)',
+                  color: '#333',
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                <span style={{ color: '#c41e2a' }}>S</span>uper
+                <span style={{ color: '#c41e2a' }}>S</span>tar
+              </span>
+              <span style={{ color: '#c41e2a', fontSize: '14px' }}>★</span>
+            </div>
+          </div>
+
+          {/* Instructions text */}
+          <div
+            className="text-center mt-1"
+            style={{
+              color: '#e8f5e9',
+              fontSize: '7px',
+              fontFamily: 'Arial, sans-serif',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+            }}
+          >
+            SCEGLI ALMENO 6 NUMERI SU PRIMO O SU ENTRAMBI I PANNELLI ROSSI
+          </div>
         </div>
 
-        {/* Stars decoration */}
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute text-yellow-400 opacity-30 text-lg"
-            style={{
-              top: `${10 + Math.random() * 60}%`,
-              left: `${5 + i * 16}%`,
-            }}
-          >
-            ★
+        {/* Schedina body - green background */}
+        <div
+          className="px-3 py-3"
+          style={{
+            background: 'linear-gradient(180deg, #a5d6a7 0%, #81c784 30%, #66bb6a 100%)',
+          }}
+        >
+          {/* Panels: 4 rows, 2 columns each */}
+          <div className="space-y-2">
+            {[0, 1, 2, 3].map((panelIdx) => {
+              const col1Idx = panelIdx * 2;
+              const col2Idx = panelIdx * 2 + 1;
+              const panelLetter = String.fromCharCode(65 + panelIdx); // A, B, C, D
+
+              return (
+                <div key={panelIdx} className="flex gap-1 items-start">
+                  {/* Dot marker */}
+                  <div className="flex flex-col items-center justify-center gap-1 pt-2">
+                    <div
+                      className="w-2 h-2 rounded-full"
+                      style={{ background: '#1b5e20' }}
+                    />
+                  </div>
+
+                  {/* Two columns side by side */}
+                  <div className="flex-1 grid grid-cols-2 gap-1">
+                    {/* Column 1 */}
+                    <div className="flex flex-col gap-0.5">
+                      <SchedinaColumn
+                        columnIndex={col1Idx}
+                        panelLabel={`PANNELLO ${panelLetter}`}
+                        selectedNumbers={columns[col1Idx].numbers}
+                        onToggleNumber={(num) => handleToggleNumber(col1Idx, num)}
+                        matchedNumbers={matchedByColumn[col1Idx] || []}
+                        disabled={disabled}
+                      />
+                      {/* Quick actions under each column */}
+                      <div className="flex gap-0.5 justify-center">
+                        <button
+                          onClick={() => handleQuickPick(col1Idx)}
+                          disabled={disabled}
+                          className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
+                          title="Casuale"
+                        >
+                          <Shuffle className="w-2 h-2" /> Auto
+                        </button>
+                        <button
+                          onClick={() => handleClear(col1Idx)}
+                          disabled={disabled}
+                          className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
+                          title="Cancella"
+                        >
+                          <Trash2 className="w-2 h-2" /> ✕
+                        </button>
+                        <span className="text-[7px] font-bold px-1 py-0.5" style={{ color: columns[col1Idx].numbers.length === 6 ? '#c41e2a' : '#333' }}>
+                          {columns[col1Idx].numbers.length}/6
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Column 2 */}
+                    <div className="flex flex-col gap-0.5">
+                      <SchedinaColumn
+                        columnIndex={col2Idx}
+                        panelLabel={`PANNELLO ${panelLetter}`}
+                        selectedNumbers={columns[col2Idx].numbers}
+                        onToggleNumber={(num) => handleToggleNumber(col2Idx, num)}
+                        matchedNumbers={matchedByColumn[col2Idx] || []}
+                        disabled={disabled}
+                      />
+                      <div className="flex gap-0.5 justify-center">
+                        <button
+                          onClick={() => handleQuickPick(col2Idx)}
+                          disabled={disabled}
+                          className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
+                        >
+                          <Shuffle className="w-2 h-2" /> Auto
+                        </button>
+                        <button
+                          onClick={() => handleClear(col2Idx)}
+                          disabled={disabled}
+                          className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
+                        >
+                          <Trash2 className="w-2 h-2" /> ✕
+                        </button>
+                        <span className="text-[7px] font-bold px-1 py-0.5" style={{ color: columns[col2Idx].numbers.length === 6 ? '#c41e2a' : '#333' }}>
+                          {columns[col2Idx].numbers.length}/6
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right side - concorso number area (decorative) */}
+                  <div
+                    className="flex flex-col items-center justify-start pt-1"
+                    style={{ minWidth: '24px' }}
+                  >
+                    <div
+                      className="text-[6px] font-bold text-center border border-gray-400 bg-white/80 px-1 py-0.5 rounded-sm"
+                      style={{ color: '#333', fontFamily: 'Arial, sans-serif' }}
+                    >
+                      {panelLetter}{panelIdx + 1}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        ))}
+        </div>
+
+        {/* Bottom bar */}
+        <div
+          className="px-4 py-2 flex items-center justify-between"
+          style={{
+            background: 'linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%)',
+            borderTop: '2px solid #bbb',
+          }}
+        >
+          <div className="flex gap-2">
+            <button
+              onClick={handleQuickPickAll}
+              disabled={disabled}
+              className="text-[9px] px-2 py-1 rounded font-bold bg-green-700 text-white hover:bg-green-800 disabled:opacity-40 flex items-center gap-1"
+            >
+              <Shuffle className="w-3 h-3" /> Tutte Casuali
+            </button>
+            <button
+              onClick={handleClearAll}
+              disabled={disabled}
+              className="text-[9px] px-2 py-1 rounded font-bold bg-gray-500 text-white hover:bg-gray-600 disabled:opacity-40 flex items-center gap-1"
+            >
+              <Trash2 className="w-3 h-3" /> Cancella
+            </button>
+          </div>
+
+          <div className="text-xs font-bold" style={{ color: '#333', fontFamily: 'Arial, sans-serif' }}>
+            Colonne: <span style={{ color: '#c41e2a' }}>{filledColumns}/8</span> ·
+            Costo: <span style={{ color: '#c41e2a' }}>€{filledColumns},00</span>
+          </div>
+
+          <div className="flex items-center gap-1" style={{ color: '#999', fontSize: '9px' }}>
+            <span style={{ color: '#c41e2a', fontWeight: 900, fontFamily: 'Arial, sans-serif', fontSize: '11px' }}>✱</span>
+            <span style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700 }}>Sisal</span>
+          </div>
+        </div>
       </div>
 
-      {/* Schedina body */}
-      <div
-        className="w-full max-w-5xl rounded-b-lg p-3 sm:p-4 border-2"
-        style={{
-          background: 'linear-gradient(180deg, #fff8dc 0%, #f5e6a3 50%, #e8d48b 100%)',
-          borderColor: '#b8960c',
-        }}
-      >
-        {/* Global actions */}
-        <div className="flex gap-2 mb-3 justify-center flex-wrap">
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={handleQuickPickAll}
-            disabled={disabled}
-            className="text-xs border-amber-700 text-amber-800 hover:bg-amber-100"
-          >
-            <Shuffle className="w-3 h-3 mr-1" /> Tutte Casuali
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={handleClearAll}
-            disabled={disabled}
-            className="text-xs border-amber-700 text-amber-800 hover:bg-amber-100"
-          >
-            <Trash2 className="w-3 h-3 mr-1" /> Cancella Tutto
-          </Button>
-        </div>
-
-        {/* Columns grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 sm:gap-3">
-          {columns.map((col, idx) => (
-            <div key={idx} className="flex flex-col gap-1">
-              <SchedinaColumn
-                columnIndex={idx}
-                selectedNumbers={col.numbers}
-                onToggleNumber={(num) => handleToggleNumber(idx, num)}
-                matchedNumbers={matchedByColumn[idx] || []}
-                disabled={disabled}
-              />
-              <div className="flex gap-0.5 justify-center">
-                <button
-                  onClick={() => handleQuickPick(idx)}
-                  disabled={disabled}
-                  className="text-[9px] px-1.5 py-0.5 rounded bg-amber-700 text-white hover:bg-amber-800 disabled:opacity-40"
-                  title="Casuale"
-                >
-                  <Shuffle className="w-2.5 h-2.5" />
-                </button>
-                <button
-                  onClick={() => handleClear(idx)}
-                  disabled={disabled}
-                  className="text-[9px] px-1.5 py-0.5 rounded bg-gray-500 text-white hover:bg-gray-600 disabled:opacity-40"
-                  title="Cancella"
-                >
-                  <Trash2 className="w-2.5 h-2.5" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Cost indicator */}
-        <div
-          className="mt-3 text-center text-sm font-bold"
-          style={{ color: '#5a4800', fontFamily: 'Arial, sans-serif' }}
+      {/* Play button below the schedina */}
+      <div className="mt-4 flex justify-center">
+        <button
+          onClick={onPlay}
+          disabled={disabled || !hasAnySelection}
+          className="px-10 py-3 rounded-xl font-black text-lg tracking-wider transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
+          style={{
+            background: hasAnySelection
+              ? 'linear-gradient(180deg, #4caf50 0%, #2e7d32 50%, #1b5e20 100%)'
+              : '#999',
+            color: '#fff',
+            fontFamily: '"Arial Black", Impact, sans-serif',
+            textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
+            boxShadow: hasAnySelection
+              ? '0 4px 20px rgba(46, 125, 50, 0.5), inset 0 1px 0 rgba(255,255,255,0.3)'
+              : 'none',
+            border: hasAnySelection ? '2px solid #1b5e20' : '2px solid #999',
+          }}
         >
-          Colonne giocate: {filledColumns}/8 · Costo:{' '}
-          <span className="text-red-700">€{filledColumns},00</span>
-        </div>
-
-        {/* Play button */}
-        <div className="mt-3 flex justify-center">
-          <button
-            onClick={onPlay}
-            disabled={disabled || !hasAnySelection}
-            className="px-8 py-3 rounded-lg font-black text-lg tracking-wider transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
-            style={{
-              background: hasAnySelection
-                ? 'linear-gradient(180deg, #ff4444 0%, #c41e2a 50%, #8b0000 100%)'
-                : '#999',
-              color: '#fff',
-              fontFamily: '"Arial Black", Impact, sans-serif',
-              textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
-              boxShadow: hasAnySelection
-                ? '0 4px 15px rgba(196, 30, 42, 0.4), inset 0 1px 0 rgba(255,255,255,0.3)'
-                : 'none',
-            }}
-          >
-            <Play className="inline w-5 h-5 mr-2 -mt-0.5" />
-            GIOCA
-          </button>
-        </div>
+          <Play className="inline w-5 h-5 mr-2 -mt-0.5" />
+          GIOCA
+        </button>
       </div>
     </div>
   );

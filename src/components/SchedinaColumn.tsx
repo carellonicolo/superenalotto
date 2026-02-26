@@ -3,83 +3,124 @@ import { cn } from '@/lib/utils';
 
 interface SchedinaColumnProps {
   columnIndex: number;
+  panelLabel: string;
   selectedNumbers: number[];
   onToggleNumber: (num: number) => void;
   matchedNumbers?: number[];
   disabled?: boolean;
+  superstarSelected?: number | null;
+  onToggleSuperstar?: (num: number) => void;
 }
 
 const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
   columnIndex,
+  panelLabel,
   selectedNumbers,
   onToggleNumber,
   matchedNumbers = [],
   disabled = false,
+  superstarSelected = null,
+  onToggleSuperstar,
 }) => {
   const isSelected = (n: number) => selectedNumbers.includes(n);
   const isMatched = (n: number) => matchedNumbers.includes(n);
 
+  // 6 rows x 15 columns = 90 numbers, like real ticket
+  const rows = [
+    Array.from({ length: 15 }, (_, i) => i + 1),      // 1-15
+    Array.from({ length: 15 }, (_, i) => i + 16),     // 16-30
+    Array.from({ length: 15 }, (_, i) => i + 31),     // 31-45
+    Array.from({ length: 15 }, (_, i) => i + 46),     // 46-60
+    Array.from({ length: 15 }, (_, i) => i + 61),     // 61-75
+    Array.from({ length: 15 }, (_, i) => i + 76),     // 76-90
+  ];
+
   return (
-    <div className="flex flex-col items-center">
-      {/* Column header */}
+    <div className="flex">
+      {/* Panel label on the left - vertical */}
       <div
-        className="w-full text-center font-bold text-xs uppercase tracking-wider py-1 rounded-t-sm"
+        className="flex items-center justify-center px-0.5 rounded-l"
         style={{
-          background: 'linear-gradient(180deg, #c41e2a 0%, #9a1520 100%)',
+          writingMode: 'vertical-rl',
+          textOrientation: 'mixed',
+          transform: 'rotate(180deg)',
+          background: '#d42f2f',
           color: '#fff',
           fontFamily: '"Arial Black", Arial, sans-serif',
-          letterSpacing: '0.1em',
+          fontSize: '8px',
+          fontWeight: 900,
+          letterSpacing: '0.15em',
+          minWidth: '14px',
         }}
       >
-        {columnIndex + 1}ª
+        {panelLabel}
       </div>
 
-      {/* Number grid: 10 rows x 9 columns = 90 numbers */}
-      <div
-        className="grid gap-0 border border-gray-600"
-        style={{
-          gridTemplateColumns: 'repeat(9, 1fr)',
-          background: '#fffde6',
-        }}
-      >
-        {Array.from({ length: 90 }, (_, i) => i + 1).map((num) => {
-          const selected = isSelected(num);
-          const matched = isMatched(num);
-          const cantSelect = !selected && selectedNumbers.length >= 6;
+      {/* Number grid */}
+      <div className="flex-1">
+        <div
+          className="border border-gray-400"
+          style={{ background: '#fff' }}
+        >
+          {rows.map((row, rowIdx) => (
+            <div key={rowIdx} className="flex">
+              {row.map((num) => {
+                const selected = isSelected(num);
+                const matched = isMatched(num);
+                const cantSelect = !selected && selectedNumbers.length >= 6;
 
-          return (
-            <button
-              key={num}
-              disabled={disabled || cantSelect}
-              onClick={() => onToggleNumber(num)}
-              className={cn(
-                'w-[22px] h-[20px] sm:w-[26px] sm:h-[22px] text-[9px] sm:text-[10px] font-bold border border-gray-300 transition-all duration-100 flex items-center justify-center',
-                'hover:bg-yellow-200 focus:outline-none',
-                selected && !matched && 'bg-red-600 text-white border-red-700',
-                matched && 'bg-green-500 text-white border-green-700 animate-pulse',
-                !selected && !matched && 'text-gray-800',
-                cantSelect && !selected && 'opacity-40 cursor-not-allowed',
-              )}
-              style={{
-                fontFamily: '"Arial Narrow", Arial, sans-serif',
-              }}
-            >
-              {num}
-            </button>
-          );
-        })}
+                return (
+                  <button
+                    key={num}
+                    disabled={disabled || cantSelect}
+                    onClick={() => onToggleNumber(num)}
+                    className={cn(
+                      'flex-1 aspect-square flex items-center justify-center border border-gray-200 transition-all duration-75',
+                      'hover:bg-green-200 focus:outline-none',
+                      'text-[8px] sm:text-[9px] lg:text-[10px] font-semibold leading-none',
+                      selected && !matched && 'bg-red-600 text-white border-red-600',
+                      matched && 'bg-green-500 text-white border-green-600 ring-1 ring-green-400',
+                      !selected && !matched && 'text-gray-800 bg-white',
+                      cantSelect && !selected && 'opacity-30 cursor-not-allowed',
+                    )}
+                    style={{
+                      fontFamily: '"Arial Narrow", Arial, sans-serif',
+                      minWidth: '14px',
+                      minHeight: '13px',
+                      padding: '1px',
+                    }}
+                  >
+                    {num}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Selection counter */}
+      {/* SuperStar mini section */}
       <div
-        className="w-full text-center text-[10px] py-0.5 font-semibold"
+        className="flex flex-col items-center justify-start px-0.5 py-0.5 rounded-r"
         style={{
-          background: selectedNumbers.length === 6 ? '#c41e2a' : '#f0e68c',
-          color: selectedNumbers.length === 6 ? '#fff' : '#333',
-          fontFamily: 'Arial, sans-serif',
+          background: 'linear-gradient(180deg, #ffd700 0%, #f0c800 100%)',
+          minWidth: '28px',
         }}
       >
-        {selectedNumbers.length}/6
+        <div
+          className="text-[6px] font-black text-center leading-tight mb-0.5"
+          style={{
+            color: '#c41e2a',
+            fontFamily: '"Arial Black", Arial, sans-serif',
+          }}
+        >
+          Super
+          <br />
+          Star
+        </div>
+        <div className="text-[5px] text-center text-red-700" style={{ lineHeight: 1 }}>
+          ★
+        </div>
       </div>
     </div>
   );
