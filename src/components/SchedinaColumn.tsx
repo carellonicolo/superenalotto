@@ -157,19 +157,19 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
         {/* SuperStar picker popup */}
         {showSuperstarPicker && onToggleSuperstar && (
           <div
-            className="absolute top-0 right-full mr-1 z-50 p-2.5 rounded-lg shadow-xl border-2 border-amber-400"
+            className="absolute top-0 right-full mr-1 z-50 p-3 rounded-lg shadow-xl border-2 border-amber-400"
             style={{
               background: 'linear-gradient(180deg, #fffde7 0%, #fff9c4 100%)',
-              width: '220px',
+              width: '280px',
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="text-[11px] font-black text-center mb-1.5" style={{ color: '#c41e2a' }}>
+            <div className="text-xs font-black text-center mb-2" style={{ color: '#c41e2a' }}>
               ★ SUPERSTAR ★
             </div>
-            <div className="space-y-0.5">
+            <div className="space-y-1">
               {superstarRows.map((row, rowIdx) => (
-                <div key={rowIdx} className="flex gap-0.5 justify-center">
+                <div key={rowIdx} className="flex gap-1 justify-center">
                   {row.map((num) => (
                     <button
                       key={num}
@@ -178,7 +178,7 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
                         setShowSuperstarPicker(false);
                       }}
                       className={cn(
-                        'w-5 h-5 flex items-center justify-center text-[9px] font-bold rounded-sm transition-all',
+                        'w-7 h-7 flex items-center justify-center text-[11px] font-bold rounded transition-all',
                         num === superstarSelected
                           ? 'bg-red-600 text-white shadow-sm'
                           : 'bg-white text-gray-700 hover:bg-amber-200 border border-gray-300',
