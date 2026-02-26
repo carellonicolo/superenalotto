@@ -167,9 +167,9 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
             <div className="text-xs font-black text-center mb-2" style={{ color: '#c41e2a' }}>
               ★ SUPERSTAR ★
             </div>
-            <div className="space-y-0.5">
+            <div className="space-y-1">
               {superstarRows.map((row, rowIdx) => (
-                <div key={rowIdx} className="flex gap-0.5 justify-center">
+                <div key={rowIdx} className="flex gap-1 justify-center">
                   {row.map((num) => (
                     <button
                       key={num}
