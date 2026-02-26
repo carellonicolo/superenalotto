@@ -290,7 +290,7 @@ const Schedina: React.FC<SchedinaProps> = ({
 
           <div className="text-xs font-bold" style={{ color: '#333', fontFamily: 'Arial, sans-serif' }}>
             Colonne: <span style={{ color: '#c41e2a' }}>{filledColumns}/4</span> ·
-            Costo: <span style={{ color: '#c41e2a' }}>€{filledColumns + columns.filter(c => c.superstar != null).length * 0.5},00</span>
+            Costo: <span style={{ color: '#c41e2a' }}>€{(filledColumns + columns.filter(c => c.superstar != null).length * 0.5).toFixed(2).replace('.', ',')}</span>
           </div>
 
           <div className="flex items-center gap-1" style={{ color: '#999', fontSize: '9px' }}>
