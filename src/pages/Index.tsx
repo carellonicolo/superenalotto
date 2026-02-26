@@ -37,7 +37,8 @@ const Index: React.FC = () => {
   const gameIdRef = useRef(0);
 
   const handlePlay = useCallback(() => {
-    const filledColumns = columns.filter((c) => c.numbers.length === 6);
+    const safeColumns = normalizeColumns(columns);
+    const filledColumns = safeColumns.filter((c) => c.numbers.length === 6);
     if (filledColumns.length === 0) return;
 
     setIsAnimating(true);
