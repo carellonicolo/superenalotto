@@ -73,13 +73,13 @@ const Schedina: React.FC<SchedinaProps> = ({
         nums.push(pool[idx]);
         pool.splice(idx, 1);
       }
-      return { numbers: nums.sort((a, b) => a - b) };
+      return { numbers: nums.sort((a, b) => a - b), superstar: null };
     });
     onColumnsChange(newColumns);
   };
 
   const handleClearAll = () => {
-    onColumnsChange(columns.map(() => ({ numbers: [] })));
+    onColumnsChange(columns.map(() => ({ numbers: [], superstar: null })));
   };
 
   const hasAnySelection = columns.some((c) => c.numbers.length === 6);
