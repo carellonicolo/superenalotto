@@ -218,7 +218,7 @@ const Schedina: React.FC<SchedinaProps> = ({
                         
                         <Trash2 className="w-2.5 h-2.5" /> ✕
                       </button>
-                      <span className="text-[11px] font-bold px-1 py-0.5" style={{ color: col.numbers.length === 6 ? '#c41e2a' : '#333' }}>
+                      <span className={`text-[11px] font-bold px-1 py-0.5 ${col.numbers.length === 6 ? 'text-destructive' : 'text-foreground'}`}>
                         {col.numbers.length}/6
                       </span>
                     </div>

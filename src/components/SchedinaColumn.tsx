@@ -111,7 +111,7 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
                     className={cn(
                       'flex-1 aspect-square flex items-center justify-center border border-gray-200 transition-all duration-75',
                       'hover:bg-green-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:z-10',
-                      'text-[9px] sm:text-[11px] lg:text-[12px] font-medium leading-none',
+                      'text-[11px] sm:text-[12px] lg:text-[13px] font-medium leading-none',
                       selected && !matched && 'bg-red-600 text-white border-red-600',
                       matched && 'bg-green-500 text-white border-green-600 ring-1 ring-green-400',
                       !selected && !matched && 'text-gray-800 bg-white',
@@ -220,7 +220,7 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
                   onToggleSuperstar(superstarSelected);
                   setShowSuperstarPicker(false);
                 }}
-                className="mt-1.5 w-full text-[9px] py-1 bg-gray-200 hover:bg-gray-300 rounded text-center font-bold"
+                className="mt-1.5 w-full text-[11px] py-1 bg-secondary hover:bg-secondary/80 rounded text-center font-bold"
               >
                 Rimuovi ✕
               </button>

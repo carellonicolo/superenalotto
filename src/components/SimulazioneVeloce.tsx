@@ -80,7 +80,7 @@ const SimulazioneVeloce: React.FC<SimulazioneVeloceProps> = ({ columns }) => {
               max={EXTRACTION_OPTIONS.length - 1}
               step={1}
             />
-            <div className="flex justify-between text-[10px] text-muted-foreground">
+            <div className="flex justify-between text-[11px] text-muted-foreground">
               {EXTRACTION_OPTIONS.map((n) => (
                 <span key={n}>{formatNumber(n)}</span>
               ))}
@@ -126,7 +126,7 @@ const SimulazioneVeloce: React.FC<SimulazioneVeloceProps> = ({ columns }) => {
                     <div className="text-xl font-bold" style={{ color: result.totalWon >= result.totalSpent ? 'hsl(145 60% 65%)' : 'hsl(0 72% 65%)' }}>
                       {formatCurrency(result.totalWon - result.totalSpent)}
                     </div>
-                    <div className="text-[10px] text-muted-foreground">
+                    <div className="text-[11px] text-muted-foreground">
                       Rendimento: {((result.totalWon / result.totalSpent) * 100).toFixed(1)}%
                     </div>
                   </div>
