@@ -7,6 +7,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { RotateCcw, Share2 } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 import Schedina from '@/components/Schedina';
 import Estrazione from '@/components/Estrazione';
 import ProbabilitaPanel from '@/components/ProbabilitaPanel';
@@ -63,6 +65,9 @@ const Index: React.FC = () => {
     const interval = setInterval(() => {
       count++;
       setRevealedCount(count);
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        navigator.vibrate(30);
+      }
       if (count >= 8) {
         clearInterval(interval);
         setTimeout(() => {
@@ -153,21 +158,54 @@ const Index: React.FC = () => {
               revealedCount={revealedCount}
             />
             {lastResults && (
-              <div
-                role="status"
-                aria-live="polite"
-                className="mt-4 text-center text-sm font-semibold p-3 rounded-xl"
-                style={{
-                  background: lastResults.includes('🎉')
-                    ? 'hsl(145 60% 42% / 0.15)'
-                    : 'hsl(45 100% 51% / 0.12)',
-                  color: lastResults.includes('🎉')
-                    ? 'hsl(145 60% 65%)'
-                    : 'hsl(45 80% 65%)',
-                  border: `1px solid ${lastResults.includes('🎉') ? 'hsl(145 60% 42% / 0.3)' : 'hsl(45 100% 51% / 0.2)'}`,
-                }}
-              >
-                {lastResults}
+              <div className="mt-4 space-y-3">
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="text-center text-sm font-semibold p-3 rounded-xl"
+                  style={{
+                    background: lastResults.includes('🎉')
+                      ? 'hsl(145 60% 42% / 0.15)'
+                      : 'hsl(45 100% 51% / 0.12)',
+                    color: lastResults.includes('🎉')
+                      ? 'hsl(145 60% 65%)'
+                      : 'hsl(45 80% 65%)',
+                    border: `1px solid ${lastResults.includes('🎉') ? 'hsl(145 60% 42% / 0.3)' : 'hsl(45 100% 51% / 0.2)'}`,
+                  }}
+                >
+                  {lastResults}
+                </div>
+                <div className="flex justify-center gap-2">
+                  <button
+                    onClick={() => {
+                      setExtraction(null);
+                      setMatchedByColumn([]);
+                      setLastResults(null);
+                      setRevealedCount(0);
+                    }}
+                    className="text-xs px-4 py-2 rounded-lg font-semibold bg-secondary/60 border border-border text-foreground hover:bg-secondary transition-all flex items-center gap-1.5"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" /> Nuova Partita
+                  </button>
+                  <button
+                    onClick={() => {
+                      const numbersText = columns
+                        .map((c, i) => c.numbers.length === 6 ? `Col ${i + 1}: ${c.numbers.join(', ')}${c.superstar ? ` ★${c.superstar}` : ''}` : null)
+                        .filter(Boolean)
+                        .join('\n');
+                      const extText = extraction ? `Estrazione: ${extraction.numbers.join(', ')} | Jolly: ${extraction.jolly} | SuperStar: ${extraction.superstar}` : '';
+                      const text = `🎰 SuperEnalotto Simulator\n${numbersText}\n${extText}\n${lastResults}`;
+                      navigator.clipboard.writeText(text).then(() => {
+                        toast({ title: '📋 Copiato!', description: 'Risultato copiato negli appunti.' });
+                      }).catch(() => {
+                        toast({ variant: 'destructive', title: 'Errore', description: 'Impossibile copiare.' });
+                      });
+                    }}
+                    className="text-xs px-4 py-2 rounded-lg font-semibold bg-secondary/60 border border-border text-foreground hover:bg-secondary transition-all flex items-center gap-1.5"
+                  >
+                    <Share2 className="w-3.5 h-3.5" /> Condividi
+                  </button>
+                </div>
               </div>
             )}
           </div>
