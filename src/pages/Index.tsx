@@ -49,14 +49,12 @@ const Index: React.FC = () => {
     const ext = generateExtraction();
     setExtraction(ext);
 
-    // Animate revealing numbers one by one
     let count = 0;
     const interval = setInterval(() => {
       count++;
       setRevealedCount(count);
       if (count >= 8) {
         clearInterval(interval);
-        // Calculate matches after all revealed
         setTimeout(() => {
           const results = safeColumns.map((col, idx) => {
             if (col.numbers.length !== 6) return { columnIndex: idx, matched: [], jollyMatch: false, superstarMatch: false, category: null, prize: 0 };
@@ -73,7 +71,6 @@ const Index: React.FC = () => {
           const totalWon = results.reduce((sum, r) => sum + r.prize, 0);
           const cost = filledColumns.length;
 
-          // Build results summary
           const winMessages = results
             .filter((r) => r.category)
             .map((r) => `Colonna ${r.columnIndex + 1}: ${r.category} (${formatCurrency(r.prize)})`);
@@ -103,30 +100,31 @@ const Index: React.FC = () => {
   }, [columns]);
 
   return (
-    <div
-      className="min-h-screen pb-8"
-      style={{
-        background: 'linear-gradient(180deg, #0d2240 0%, #1a3a6b 20%, #f5f0e1 20.1%)',
-      }}
-    >
-      {/* Top bar */}
-      <header className="text-center py-4 px-4">
-        <h1
-          className="text-3xl sm:text-4xl font-black tracking-widest"
-          style={{
-            color: '#ffd700',
-            fontFamily: '"Arial Black", Impact, sans-serif',
-            textShadow: '2px 2px 8px rgba(0,0,0,0.5)',
-          }}
-        >
-          SIMULATORE SUPERENALOTTO
+    <main className="min-h-screen pb-12 relative overflow-hidden">
+      {/* Background */}
+      <div className="fixed inset-0 -z-10" style={{
+        background: 'radial-gradient(ellipse at 50% 0%, hsl(225 30% 15%) 0%, hsl(225 25% 8%) 70%)',
+      }} />
+      <div className="fixed inset-0 -z-10 opacity-30" style={{
+        backgroundImage: 'radial-gradient(circle at 20% 80%, hsl(45 100% 51% / 0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, hsl(145 60% 42% / 0.06) 0%, transparent 50%)',
+      }} />
+
+      {/* Header */}
+      <header className="text-center pt-8 pb-6 px-4">
+        <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-primary" style={{
+          fontFamily: "'Space Grotesk', system-ui, sans-serif",
+        }}>
+          SIMULATORE
+          <span className="block text-lg sm:text-2xl font-medium tracking-widest text-foreground/60 mt-1">
+            SUPERENALOTTO
+          </span>
         </h1>
-        <p className="text-xs sm:text-sm mt-1" style={{ color: '#aac4e8' }}>
+        <p className="text-sm mt-3 text-muted-foreground max-w-md mx-auto">
           Strumento didattico per lo studio della probabilità
         </p>
       </header>
 
-      <div className="max-w-6xl mx-auto px-3 sm:px-4 space-y-4">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 space-y-6">
         {/* Schedina */}
         <Schedina
           columns={columns}
@@ -138,7 +136,7 @@ const Index: React.FC = () => {
 
         {/* Extraction display */}
         {extraction && (
-          <div className="bg-white rounded-xl shadow-lg border-2 border-amber-300 p-4">
+          <div className="glass-card glow-gold p-5">
             <Estrazione
               extraction={extraction}
               isAnimating={isAnimating}
@@ -146,12 +144,15 @@ const Index: React.FC = () => {
             />
             {lastResults && (
               <div
-                className="mt-3 text-center text-sm font-bold p-3 rounded-lg animate-fade-in"
+                className="mt-4 text-center text-sm font-semibold p-3 rounded-xl"
                 style={{
                   background: lastResults.includes('🎉')
-                    ? 'linear-gradient(135deg, #d4edda, #c3e6cb)'
-                    : 'linear-gradient(135deg, #fff3cd, #ffeeba)',
-                  color: lastResults.includes('🎉') ? '#155724' : '#856404',
+                    ? 'hsl(145 60% 42% / 0.15)'
+                    : 'hsl(45 100% 51% / 0.12)',
+                  color: lastResults.includes('🎉')
+                    ? 'hsl(145 60% 65%)'
+                    : 'hsl(45 80% 65%)',
+                  border: `1px solid ${lastResults.includes('🎉') ? 'hsl(145 60% 42% / 0.3)' : 'hsl(45 100% 51% / 0.2)'}`,
                 }}
               >
                 {lastResults}
@@ -160,19 +161,19 @@ const Index: React.FC = () => {
           </div>
         )}
 
-        {/* Tabs for didactic content */}
+        {/* Tabs */}
         <Tabs defaultValue="probabilita" className="w-full">
-          <TabsList className="w-full grid grid-cols-4 bg-blue-900/10">
-            <TabsTrigger value="probabilita" className="text-xs sm:text-sm">
+          <TabsList className="w-full grid grid-cols-4 bg-secondary/50 backdrop-blur-sm border border-border rounded-xl p-1 h-auto">
+            <TabsTrigger value="probabilita" className="text-xs sm:text-sm py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all">
               📊 Probabilità
             </TabsTrigger>
-            <TabsTrigger value="formule" className="text-xs sm:text-sm">
+            <TabsTrigger value="formule" className="text-xs sm:text-sm py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all">
               📐 Formule
             </TabsTrigger>
-            <TabsTrigger value="simulazione" className="text-xs sm:text-sm">
+            <TabsTrigger value="simulazione" className="text-xs sm:text-sm py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all">
               ⚡ Simulazione
             </TabsTrigger>
-            <TabsTrigger value="statistiche" className="text-xs sm:text-sm">
+            <TabsTrigger value="statistiche" className="text-xs sm:text-sm py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all">
               📈 Statistiche
             </TabsTrigger>
           </TabsList>
@@ -180,21 +181,23 @@ const Index: React.FC = () => {
           <TabsContent value="probabilita">
             <ProbabilitaPanel />
           </TabsContent>
-
           <TabsContent value="formule">
             <FormuleCombinatorie />
           </TabsContent>
-
           <TabsContent value="simulazione">
             <SimulazioneVeloce columns={columns} />
           </TabsContent>
-
           <TabsContent value="statistiche">
             <StatisticheDashboard history={gameHistory} />
           </TabsContent>
         </Tabs>
       </div>
-    </div>
+
+      {/* Footer */}
+      <footer className="text-center mt-12 pb-6 text-xs text-muted-foreground/50">
+        Simulatore a scopo didattico · Non è un sito di gioco d'azzardo
+      </footer>
+    </main>
   );
 };
 
