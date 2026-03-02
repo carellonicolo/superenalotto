@@ -2,7 +2,7 @@ import React from 'react';
 import SchedinaColumn from './SchedinaColumn';
 import RegoleModal from './RegoleModal';
 import { type ColumnSelection } from '@/lib/superenalotto';
-import { Shuffle, Trash2, Play } from 'lucide-react';
+import { Shuffle, Trash2, Play, Github } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import superenalottoLogo from '@/assets/superenalotto-logo.png';
 
@@ -151,7 +151,24 @@ const Schedina: React.FC<SchedinaProps> = ({
             >
               SCEGLI ALMENO 6 NUMERI SU PRIMO O SU ENTRAMBI I PANNELLI ROSSI
             </div>
-            <RegoleModal />
+            <div className="flex items-center gap-2">
+              <RegoleModal />
+              <a
+                href="https://github.com/YOUR_USERNAME/superenalotto-simulator"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[10px] sm:text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all hover:scale-105"
+                style={{
+                  background: 'linear-gradient(180deg, #1a3a6b 0%, #0d2240 100%)',
+                  color: '#ffd700',
+                  border: '1px solid #2a5a9b',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                }}
+              >
+                <Github className="w-3.5 h-3.5" />
+                GitHub
+              </a>
+            </div>
           </div>
         </div>
 
