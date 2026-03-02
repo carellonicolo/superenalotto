@@ -13,6 +13,7 @@ import ProbabilitaPanel from '@/components/ProbabilitaPanel';
 import FormuleCombinatorie from '@/components/FormuleCombinatorie';
 import SimulazioneVeloce from '@/components/SimulazioneVeloce';
 import StatisticheDashboard, { type GameRecord } from '@/components/StatisticheDashboard';
+import DisclaimerModal from '@/components/DisclaimerModal';
 import {
   type ColumnSelection,
   type ExtractionResult,
@@ -108,6 +109,7 @@ const Index: React.FC = () => {
 
   return (
     <main className="min-h-screen pb-12 relative overflow-hidden">
+      <DisclaimerModal />
       {/* Background */}
       <div className="fixed inset-0 -z-10" style={{
         background: 'radial-gradient(ellipse at 50% 0%, hsl(225 30% 15%) 0%, hsl(225 25% 8%) 70%)',
