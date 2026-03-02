@@ -2,7 +2,7 @@ import React from 'react';
 import SchedinaColumn from './SchedinaColumn';
 import RegoleModal from './RegoleModal';
 import { type ColumnSelection } from '@/lib/superenalotto';
-import { Shuffle, Trash2, Play } from 'lucide-react';
+import { Shuffle, Trash2, Play, Github } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import superenalottoLogo from '@/assets/superenalotto-logo.png';
 
