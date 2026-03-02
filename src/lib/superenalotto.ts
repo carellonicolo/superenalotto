@@ -164,11 +164,23 @@ export function runSimulation(columns: ColumnSelection[], numExtractions: number
 
   for (let i = 0; i < numExtractions; i++) {
     const extraction = generateExtraction();
+    const numSet = new Set(extraction.numbers);
     for (const col of columns) {
-      const result = checkMatches(col, extraction);
-      if (result.category) {
-        winsByCategory[result.category]++;
-        totalWon += result.prize;
+      const matched = col.numbers.filter(n => numSet.has(n));
+      const jollyMatch = col.numbers.includes(extraction.jolly);
+      const matchCount = matched.length;
+
+      let category: WinCategory | null = null;
+      if (matchCount === 6) category = '6';
+      else if (matchCount === 5 && jollyMatch) category = '5+1';
+      else if (matchCount === 5) category = '5';
+      else if (matchCount === 4) category = '4';
+      else if (matchCount === 3) category = '3';
+      else if (matchCount === 2) category = '2';
+
+      if (category) {
+        winsByCategory[category]++;
+        totalWon += AVERAGE_PRIZES[category];
       }
     }
   }

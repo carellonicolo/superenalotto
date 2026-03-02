@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 
 interface SchedinaColumnProps {
@@ -23,8 +23,25 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
   onToggleSuperstar,
 }) => {
   const [showSuperstarPicker, setShowSuperstarPicker] = useState(false);
+  const pickerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
   const isSelected = (n: number) => selectedNumbers.includes(n);
   const isMatched = (n: number) => matchedNumbers.includes(n);
+
+  // Click-outside handler for SuperStar picker
+  useEffect(() => {
+    if (!showSuperstarPicker) return;
+    const handler = (e: MouseEvent) => {
+      if (
+        pickerRef.current && !pickerRef.current.contains(e.target as Node) &&
+        triggerRef.current && !triggerRef.current.contains(e.target as Node)
+      ) {
+        setShowSuperstarPicker(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showSuperstarPicker]);
 
   // 6 rows x 15 columns = 90 numbers, like real ticket
   const rows = [
@@ -118,6 +135,7 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
 
       {/* SuperStar mini section */}
       <div
+        ref={triggerRef}
         className="relative flex flex-col items-center justify-start px-1 py-1 rounded-r cursor-pointer"
         style={{
           background: 'linear-gradient(180deg, #ffd700 0%, #f0c800 100%)',
@@ -158,14 +176,15 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
 
         {/* SuperStar picker popup */}
         {showSuperstarPicker && onToggleSuperstar && (
-          <div
+           <div
+            ref={pickerRef}
             className={cn(
               "absolute right-full mr-1 z-50 p-4 rounded-lg shadow-xl border-2 border-amber-400",
+              "w-[280px] sm:w-[360px]",
               columnIndex >= 2 ? "bottom-0" : "top-0"
             )}
             style={{
               background: 'linear-gradient(180deg, #fffde7 0%, #fff9c4 100%)',
-              width: '360px',
             }}
             onClick={(e) => e.stopPropagation()}
           >

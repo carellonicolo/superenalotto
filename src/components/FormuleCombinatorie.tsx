@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { binomial, formatNumber } from '@/lib/superenalotto';
+import React, { useEffect, useRef, useMemo } from 'react';
+import { binomial, formatNumber, calculateProbability, AVERAGE_PRIZES, WIN_CATEGORIES, type WinCategory } from '@/lib/superenalotto';
 import { BookOpen } from 'lucide-react';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
@@ -89,20 +89,38 @@ const FormuleCombinatorie: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20">
-        <h3 className="font-bold text-sm mb-2 text-destructive">⚠️ Valore Atteso di una Giocata</h3>
-        <p className="text-xs text-foreground/70 mb-2">
-          Il <strong>valore atteso</strong> è la somma dei prodotti tra probabilità e premio per ogni categoria. Se il valore atteso è inferiore al costo della giocata, il gioco è <strong>sfavorevole</strong> per il giocatore.
-        </p>
-        <div className="text-center py-3 bg-background/50 rounded-lg border border-border">
-          <KaTeX math="E[V] = \sum_{i} P(\text{cat}_i) \cdot \text{Premio}(\text{cat}_i)" display className="text-foreground" />
-        </div>
-        <p className="text-xs text-destructive font-bold mt-2 text-center">
-          Il valore atteso è circa €0,30 per ogni €1,00 giocato.
-          <br />
-          <span className="opacity-80">Il banco trattiene mediamente il 70% delle giocate!</span>
-        </p>
+      <ExpectedValueSection />
+    </div>
+  );
+};
+
+const ExpectedValueSection: React.FC = () => {
+  const ev = useMemo(() => {
+    let total = 0;
+    for (const cat of WIN_CATEGORIES) {
+      const { probability } = calculateProbability(cat.category);
+      total += probability * AVERAGE_PRIZES[cat.category];
+    }
+    return total;
+  }, []);
+
+  const evFormatted = ev.toFixed(2).replace('.', ',');
+  const retention = ((1 - ev) * 100).toFixed(0);
+
+  return (
+    <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20">
+      <h3 className="font-bold text-sm mb-2 text-destructive">⚠️ Valore Atteso di una Giocata</h3>
+      <p className="text-xs text-foreground/70 mb-2">
+        Il <strong>valore atteso</strong> è la somma dei prodotti tra probabilità e premio per ogni categoria. Se il valore atteso è inferiore al costo della giocata, il gioco è <strong>sfavorevole</strong> per il giocatore.
+      </p>
+      <div className="text-center py-3 bg-background/50 rounded-lg border border-border">
+        <KaTeX math="E[V] = \sum_{i} P(\text{cat}_i) \cdot \text{Premio}(\text{cat}_i)" display className="text-foreground" />
       </div>
+      <p className="text-xs text-destructive font-bold mt-2 text-center">
+        Il valore atteso è €{evFormatted} per ogni €1,00 giocato.
+        <br />
+        <span className="opacity-80">Il banco trattiene mediamente il {retention}% delle giocate!</span>
+      </p>
     </div>
   );
 };

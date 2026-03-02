@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, lazy, Suspense } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -10,10 +10,12 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import Schedina from '@/components/Schedina';
 import Estrazione from '@/components/Estrazione';
 import ProbabilitaPanel from '@/components/ProbabilitaPanel';
-import FormuleCombinatorie from '@/components/FormuleCombinatorie';
-import SimulazioneVeloce from '@/components/SimulazioneVeloce';
-import StatisticheDashboard, { type GameRecord } from '@/components/StatisticheDashboard';
 import DisclaimerModal from '@/components/DisclaimerModal';
+import { type GameRecord } from '@/components/StatisticheDashboard';
+
+const FormuleCombinatorie = lazy(() => import('@/components/FormuleCombinatorie'));
+const SimulazioneVeloce = lazy(() => import('@/components/SimulazioneVeloce'));
+const StatisticheDashboard = lazy(() => import('@/components/StatisticheDashboard'));
 import {
   type ColumnSelection,
   type ExtractionResult,
@@ -152,6 +154,8 @@ const Index: React.FC = () => {
             />
             {lastResults && (
               <div
+                role="status"
+                aria-live="polite"
                 className="mt-4 text-center text-sm font-semibold p-3 rounded-xl"
                 style={{
                   background: lastResults.includes('🎉')
@@ -173,9 +177,9 @@ const Index: React.FC = () => {
         <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2">
           {[
             { icon: '📊', label: 'Probabilità', content: <ProbabilitaPanel /> },
-            { icon: '📐', label: 'Formule', content: <FormuleCombinatorie /> },
-            { icon: '⚡', label: 'Simulazione', content: <SimulazioneVeloce columns={columns} /> },
-            { icon: '📈', label: 'Statistiche', content: <StatisticheDashboard history={gameHistory} /> },
+            { icon: '📐', label: 'Formule', content: <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Caricamento…</div>}><FormuleCombinatorie /></Suspense> },
+            { icon: '⚡', label: 'Simulazione', content: <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Caricamento…</div>}><SimulazioneVeloce columns={columns} /></Suspense> },
+            { icon: '📈', label: 'Statistiche', content: <Suspense fallback={<div className="p-8 text-center text-muted-foreground">Caricamento…</div>}><StatisticheDashboard history={gameHistory} /></Suspense> },
           ].map((item) => (
             <Dialog key={item.label}>
               <DialogTrigger asChild>
@@ -199,8 +203,18 @@ const Index: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <footer className="text-center mt-12 pb-6 text-xs text-muted-foreground/50">
-        Simulatore a scopo didattico · Non è un sito di gioco d'azzardo
+      <footer className="text-center mt-12 pb-6 text-xs text-muted-foreground/50 space-y-1">
+        <p>Simulatore a scopo didattico · Non è un sito di gioco d'azzardo</p>
+        <p>
+          ⚠️ Il gioco d'azzardo può creare dipendenza · Telefono Verde:{' '}
+          <a href="tel:800558822" className="underline hover:text-muted-foreground">800 558 822</a>
+        </p>
+        <button
+          onClick={() => { localStorage.removeItem('superenalotto-disclaimer-accepted'); window.location.reload(); }}
+          className="underline hover:text-muted-foreground"
+        >
+          Rileggi il disclaimer
+        </button>
       </footer>
     </main>
   );

@@ -42,7 +42,7 @@ const RegoleModal: React.FC = () => {
               <h3 className="font-bold text-base mb-2 flex items-center gap-2" style={{ color: '#c41e2a' }}>
                 🎯 Come si gioca
               </h3>
-              <ul className="space-y-1.5 text-gray-700 list-disc pl-5">
+              <ul className="space-y-1.5 text-muted-foreground list-disc pl-5">
                 <li>Scegli <strong>6 numeri</strong> da <strong>1 a 90</strong> su ciascuna colonna della schedina.</li>
                 <li>In questo simulatore la schedina ha <strong>4 colonne</strong> giocabili, organizzate in 4 pannelli (A, B, C, D).</li>
                 <li>Il costo di ciascuna colonna è di <strong>€1,00</strong>.</li>
@@ -88,12 +88,12 @@ const RegoleModal: React.FC = () => {
                     ].map((row, i) => (
                       <tr
                         key={i}
-                        className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
+                        className={i % 2 === 0 ? 'bg-secondary/50' : 'bg-background/50'}
                         style={{ borderBottom: '1px solid #e5e7eb' }}
                       >
-                        <td className="px-3 py-2 font-bold" style={{ color: '#1a3a6b' }}>{row.cat}</td>
-                        <td className="px-3 py-2 text-gray-600">{row.desc}</td>
-                        <td className="px-3 py-2 text-right font-mono text-gray-500">{row.prob}</td>
+                        <td className="px-3 py-2 font-bold text-primary">{row.cat}</td>
+                        <td className="px-3 py-2 text-muted-foreground">{row.desc}</td>
+                        <td className="px-3 py-2 text-right font-mono text-muted-foreground/70">{row.prob}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -144,7 +144,7 @@ const RegoleModal: React.FC = () => {
               className="p-3 rounded-lg"
               style={{ background: '#fff3cd', border: '1px solid #ffc107' }}
             >
-              <p className="text-xs text-gray-700">
+              <p className="text-xs text-muted-foreground">
                 <strong>⚠️ Nota didattica:</strong> Questo simulatore è creato esclusivamente a scopo educativo per lo studio della probabilità e della statistica.
                 Il gioco d'azzardo può creare dipendenza. Il SuperEnalotto è gestito da <strong>Sisal S.p.A.</strong> su concessione dell'Agenzia delle Dogane e dei Monopoli.
                 Gioca responsabilmente. Per informazioni: <strong>www.adm.gov.it</strong>.
