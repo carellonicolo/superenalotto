@@ -194,6 +194,7 @@ const Index: React.FC = () => {
               </DialogContent>
             </Dialog>
           ))}
+        </div>
       </div>
 
       {/* Footer */}
