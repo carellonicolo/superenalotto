@@ -15,18 +15,18 @@ interface SchedinaProps {
 }
 
 const PANEL_LABELS = [
-  'PANNELLO A', 'PANNELLO A',
-  'PANNELLO B', 'PANNELLO B',
-  'PANNELLO C', 'PANNELLO C',
-  'PANNELLO D', 'PANNELLO D',
-];
+'PANNELLO A', 'PANNELLO A',
+'PANNELLO B', 'PANNELLO B',
+'PANNELLO C', 'PANNELLO C',
+'PANNELLO D', 'PANNELLO D'];
+
 
 const Schedina: React.FC<SchedinaProps> = ({
   columns,
   onColumnsChange,
   onPlay,
   matchedByColumn = [],
-  disabled = false,
+  disabled = false
 }) => {
   const handleToggleNumber = (colIdx: number, num: number) => {
     const newColumns = [...columns];
@@ -90,16 +90,16 @@ const Schedina: React.FC<SchedinaProps> = ({
   const filledColumns = columns.filter((c) => c.numbers.length === 6).length;
 
   const handlePlayWithValidation = () => {
-    const partialCols = columns
-      .map((c, i) => ({ idx: i + 1, count: c.numbers.length }))
-      .filter((c) => c.count > 0 && c.count < 6);
+    const partialCols = columns.
+    map((c, i) => ({ idx: i + 1, count: c.numbers.length })).
+    filter((c) => c.count > 0 && c.count < 6);
 
     if (partialCols.length > 0) {
       const colNames = partialCols.map((c) => `Colonna ${c.idx} (${c.count}/6)`).join(', ');
       toast({
         variant: 'destructive',
         title: '⚠️ Pannello incompleto',
-        description: `Devi selezionare esattamente 6 numeri per ogni colonna giocata. Incomplete: ${colNames}`,
+        description: `Devi selezionare esattamente 6 numeri per ogni colonna giocata. Incomplete: ${colNames}`
       });
       return;
     }
@@ -108,7 +108,7 @@ const Schedina: React.FC<SchedinaProps> = ({
       toast({
         variant: 'destructive',
         title: '⚠️ Nessuna colonna compilata',
-        description: 'Seleziona 6 numeri su almeno una colonna per giocare.',
+        description: 'Seleziona 6 numeri su almeno una colonna per giocare.'
       });
       return;
     }
@@ -122,16 +122,16 @@ const Schedina: React.FC<SchedinaProps> = ({
       <div
         className="w-full rounded-xl overflow-hidden"
         style={{
-          boxShadow: '0 8px 32px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.15)',
-        }}
-      >
+          boxShadow: '0 8px 32px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.15)'
+        }}>
+        
         {/* Header - Green bar with logo */}
         <div
           className="relative px-4 py-3"
           style={{
-            background: 'linear-gradient(180deg, #4caf50 0%, #2e7d32 40%, #1b5e20 100%)',
-          }}
-        >
+            background: 'linear-gradient(180deg, #4caf50 0%, #2e7d32 40%, #1b5e20 100%)'
+          }}>
+          
           {/* Logo row */}
           <div className="flex items-center justify-center">
             <img src={superenalottoLogo} alt="SuperEnalotto" className="h-10 sm:h-14" />
@@ -146,15 +146,15 @@ const Schedina: React.FC<SchedinaProps> = ({
                 fontSize: '7px',
                 fontFamily: 'Arial, sans-serif',
                 letterSpacing: '0.05em',
-                textTransform: 'uppercase',
-              }}
-            >
+                textTransform: 'uppercase'
+              }}>
+              
               SCEGLI ALMENO 6 NUMERI SU PRIMO O SU ENTRAMBI I PANNELLI ROSSI
             </div>
             <div className="flex items-center gap-2">
               <RegoleModal />
               <a
-                href="https://github.com/YOUR_USERNAME/superenalotto-simulator"
+
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[10px] sm:text-xs px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all hover:scale-105"
@@ -162,9 +162,9 @@ const Schedina: React.FC<SchedinaProps> = ({
                   background: 'linear-gradient(180deg, #1a3a6b 0%, #0d2240 100%)',
                   color: '#ffd700',
                   border: '1px solid #2a5a9b',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                }}
-              >
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+                }} href="https://github.com/carellonicolo/superenalotto">
+                
                 <Github className="w-3.5 h-3.5" />
                 GitHub
               </a>
@@ -176,9 +176,9 @@ const Schedina: React.FC<SchedinaProps> = ({
         <div
           className="px-3 py-3"
           style={{
-            background: 'linear-gradient(180deg, #a5d6a7 0%, #81c784 30%, #66bb6a 100%)',
-          }}
-        >
+            background: 'linear-gradient(180deg, #a5d6a7 0%, #81c784 30%, #66bb6a 100%)'
+          }}>
+          
           {/* Panels: 2x2 grid */}
           <div className="grid grid-cols-2 gap-2">
             {columns.map((col, colIdx) => {
@@ -189,8 +189,8 @@ const Schedina: React.FC<SchedinaProps> = ({
                   <div className="flex flex-col items-center justify-center gap-1 pt-2">
                     <div
                       className="w-2 h-2 rounded-full"
-                      style={{ background: '#1b5e20' }}
-                    />
+                      style={{ background: '#1b5e20' }} />
+                    
                   </div>
 
                   <div className="flex-1 flex flex-col gap-0.5">
@@ -202,23 +202,23 @@ const Schedina: React.FC<SchedinaProps> = ({
                       matchedNumbers={matchedByColumn[colIdx] || []}
                       disabled={disabled}
                       superstarSelected={col.superstar}
-                      onToggleSuperstar={(num) => handleToggleSuperstar(colIdx, num)}
-                    />
+                      onToggleSuperstar={(num) => handleToggleSuperstar(colIdx, num)} />
+                    
                     <div className="flex gap-0.5 justify-center">
                       <button
                         onClick={() => handleQuickPick(colIdx)}
                         disabled={disabled}
                         className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
-                        title="Casuale"
-                      >
+                        title="Casuale">
+                        
                         <Shuffle className="w-2 h-2" /> Auto
                       </button>
                       <button
                         onClick={() => handleClear(colIdx)}
                         disabled={disabled}
                         className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
-                        title="Cancella"
-                      >
+                        title="Cancella">
+                        
                         <Trash2 className="w-2 h-2" /> ✕
                       </button>
                       <span className="text-[7px] font-bold px-1 py-0.5" style={{ color: col.numbers.length === 6 ? '#c41e2a' : '#333' }}>
@@ -226,8 +226,8 @@ const Schedina: React.FC<SchedinaProps> = ({
                       </span>
                     </div>
                   </div>
-                </div>
-              );
+                </div>);
+
             })}
           </div>
         </div>
@@ -237,29 +237,29 @@ const Schedina: React.FC<SchedinaProps> = ({
           className="px-4 py-2 flex items-center justify-between"
           style={{
             background: 'linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%)',
-            borderTop: '2px solid #bbb',
-          }}
-        >
+            borderTop: '2px solid #bbb'
+          }}>
+          
           <div className="flex gap-2">
             <button
               onClick={handleQuickPickAll}
               disabled={disabled}
-              className="text-[9px] px-2 py-1 rounded font-bold bg-green-700 text-white hover:bg-green-800 disabled:opacity-40 flex items-center gap-1"
-            >
+              className="text-[9px] px-2 py-1 rounded font-bold bg-green-700 text-white hover:bg-green-800 disabled:opacity-40 flex items-center gap-1">
+              
               <Shuffle className="w-3 h-3" /> Tutte Casuali
             </button>
             <button
               onClick={handleClearAll}
               disabled={disabled}
-              className="text-[9px] px-2 py-1 rounded font-bold bg-gray-500 text-white hover:bg-gray-600 disabled:opacity-40 flex items-center gap-1"
-            >
+              className="text-[9px] px-2 py-1 rounded font-bold bg-gray-500 text-white hover:bg-gray-600 disabled:opacity-40 flex items-center gap-1">
+              
               <Trash2 className="w-3 h-3" /> Cancella
             </button>
           </div>
 
           <div className="text-xs font-bold" style={{ color: '#333', fontFamily: 'Arial, sans-serif' }}>
             Colonne: <span style={{ color: '#c41e2a' }}>{filledColumns}/4</span> ·
-            Costo: <span style={{ color: '#c41e2a' }}>€{(filledColumns + columns.filter(c => c.superstar != null).length * 0.5).toFixed(2).replace('.', ',')}</span>
+            Costo: <span style={{ color: '#c41e2a' }}>€{(filledColumns + columns.filter((c) => c.superstar != null).length * 0.5).toFixed(2).replace('.', ',')}</span>
           </div>
 
           <div className="flex items-center gap-1" style={{ color: '#999', fontSize: '9px' }}>
@@ -276,24 +276,24 @@ const Schedina: React.FC<SchedinaProps> = ({
           disabled={disabled}
           className="px-10 py-3 rounded-xl font-black text-lg tracking-wider transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
           style={{
-            background: hasAnySelection
-              ? 'linear-gradient(180deg, #4caf50 0%, #2e7d32 50%, #1b5e20 100%)'
-              : '#999',
+            background: hasAnySelection ?
+            'linear-gradient(180deg, #4caf50 0%, #2e7d32 50%, #1b5e20 100%)' :
+            '#999',
             color: '#fff',
             fontFamily: '"Arial Black", Impact, sans-serif',
             textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
-            boxShadow: hasAnySelection
-              ? '0 4px 20px rgba(46, 125, 50, 0.5), inset 0 1px 0 rgba(255,255,255,0.3)'
-              : 'none',
-            border: hasAnySelection ? '2px solid #1b5e20' : '2px solid #999',
-          }}
-        >
+            boxShadow: hasAnySelection ?
+            '0 4px 20px rgba(46, 125, 50, 0.5), inset 0 1px 0 rgba(255,255,255,0.3)' :
+            'none',
+            border: hasAnySelection ? '2px solid #1b5e20' : '2px solid #999'
+          }}>
+          
           <Play className="inline w-5 h-5 mr-2 -mt-0.5" />
           GIOCA
         </button>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Schedina;
