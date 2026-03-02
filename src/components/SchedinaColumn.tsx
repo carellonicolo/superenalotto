@@ -144,7 +144,7 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
         onClick={() => !disabled && setShowSuperstarPicker(!showSuperstarPicker)}
       >
         <div
-          className="text-[9px] font-black text-center leading-tight mb-1"
+          className="text-[11px] font-black text-center leading-tight mb-1"
           style={{
             color: '#c41e2a',
             fontFamily: '"Arial Black", Arial, sans-serif',

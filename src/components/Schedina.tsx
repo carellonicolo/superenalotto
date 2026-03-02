@@ -230,39 +230,31 @@ const Schedina: React.FC<SchedinaProps> = ({
         </div>
 
         {/* Bottom bar */}
-        <div
-          className="px-4 py-2 flex items-center justify-between"
-          style={{
-            background: 'linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%)',
-            borderTop: '2px solid #bbb'
-          }}>
-          
+        <div className="px-4 py-2 flex items-center justify-between bg-secondary border-t-2 border-border">
           <div className="flex gap-2">
             <button
               onClick={handleQuickPickAll}
               disabled={disabled}
               aria-label="Selezione casuale per tutte le colonne"
               className="text-[11px] px-2 py-1 rounded font-bold bg-green-700 text-white hover:bg-green-800 disabled:opacity-40 flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-primary">
-              
               <Shuffle className="w-3 h-3" /> Tutte Casuali
             </button>
             <button
               onClick={handleClearAll}
               disabled={disabled}
               aria-label="Cancella tutte le colonne"
-              className="text-[11px] px-2 py-1 rounded font-bold bg-gray-500 text-white hover:bg-gray-600 disabled:opacity-40 flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-primary">
-              
+              className="text-[11px] px-2 py-1 rounded font-bold bg-muted text-muted-foreground hover:bg-muted/80 disabled:opacity-40 flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-primary">
               <Trash2 className="w-3 h-3" /> Cancella
             </button>
           </div>
 
-          <div className="text-xs font-bold" style={{ color: '#333', fontFamily: 'Arial, sans-serif' }}>
-            Colonne: <span style={{ color: '#c41e2a' }}>{filledColumns}/4</span> ·
-            Costo: <span style={{ color: '#c41e2a' }}>€{(filledColumns + columns.filter((c) => c.numbers.length === 6 && c.superstar != null).length * 0.5).toFixed(2).replace('.', ',')}</span>
+          <div className="text-xs font-bold text-foreground" style={{ fontFamily: 'Arial, sans-serif' }}>
+            Colonne: <span className="text-destructive">{filledColumns}/4</span> ·
+            Costo: <span className="text-destructive">€{(filledColumns + columns.filter((c) => c.numbers.length === 6 && c.superstar != null).length * 0.5).toFixed(2).replace('.', ',')}</span>
           </div>
 
-          <div className="flex items-center gap-1" style={{ color: '#999', fontSize: '11px' }}>
-            <span style={{ color: '#c41e2a', fontWeight: 900, fontFamily: 'Arial, sans-serif', fontSize: '11px' }}>✱</span>
+          <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
+            <span className="text-destructive font-black" style={{ fontFamily: 'Arial, sans-serif' }}>✱</span>
             <span style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700 }}>Sisal</span>
           </div>
         </div>

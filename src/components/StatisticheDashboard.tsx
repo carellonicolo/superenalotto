@@ -74,15 +74,15 @@ const StatisticheDashboard: React.FC<StatisticheDashboardProps> = ({ history }) 
         <>
           <div className="grid grid-cols-3 gap-3">
             <div className="p-3 bg-secondary/50 rounded-xl border border-border text-center">
-              <div className="text-[10px] text-muted-foreground">Giocate</div>
+              <div className="text-[11px] text-muted-foreground">Giocate</div>
               <div className="text-lg font-bold text-primary">{history.length}</div>
             </div>
             <div className="p-3 bg-secondary/50 rounded-xl border border-border text-center">
-              <div className="text-[10px] text-muted-foreground">Speso</div>
+              <div className="text-[11px] text-muted-foreground">Speso</div>
               <div className="text-lg font-bold text-destructive">{formatCurrency(totalSpent)}</div>
             </div>
             <div className="p-3 bg-secondary/50 rounded-xl border border-border text-center">
-              <div className="text-[10px] text-muted-foreground">Vinto</div>
+              <div className="text-[11px] text-muted-foreground">Vinto</div>
               <div className="text-lg font-bold text-accent">{formatCurrency(totalWon)}</div>
             </div>
           </div>

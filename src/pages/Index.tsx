@@ -7,6 +7,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { RotateCcw, Share2 } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 import Schedina from '@/components/Schedina';
 import Estrazione from '@/components/Estrazione';
 import ProbabilitaPanel from '@/components/ProbabilitaPanel';
@@ -63,7 +65,9 @@ const Index: React.FC = () => {
     const interval = setInterval(() => {
       count++;
       setRevealedCount(count);
-      if (count >= 8) {
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        navigator.vibrate(30);
+      }
         clearInterval(interval);
         setTimeout(() => {
           const results = safeColumns.map((col, idx) => {
