@@ -142,7 +142,7 @@ const StatisticheDashboard: React.FC<StatisticheDashboardProps> = ({ history }) 
                     }}
                   >
                     <span>{num}</span>
-                    <span className="text-[9px] opacity-60">×{count}</span>
+                    <span className="text-[10px] opacity-60">×{count}</span>
                   </div>
                 ))}
               </div>

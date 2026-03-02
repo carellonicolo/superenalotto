@@ -47,9 +47,9 @@ const Schedina: React.FC<SchedinaProps> = ({
     const nums: number[] = [];
     const pool = Array.from({ length: 90 }, (_, i) => i + 1);
     for (let i = 0; i < 6; i++) {
-      const idx = Math.floor(Math.random() * pool.length);
-      nums.push(pool[idx]);
-      pool.splice(idx, 1);
+      const j = i + Math.floor(Math.random() * (90 - i));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+      nums.push(pool[i]);
     }
     const newColumns = [...columns];
     newColumns[colIdx] = { numbers: nums.sort((a, b) => a - b), superstar: columns[colIdx].superstar };
@@ -67,9 +67,9 @@ const Schedina: React.FC<SchedinaProps> = ({
       const nums: number[] = [];
       const pool = Array.from({ length: 90 }, (_, i) => i + 1);
       for (let i = 0; i < 6; i++) {
-        const idx = Math.floor(Math.random() * pool.length);
-        nums.push(pool[idx]);
-        pool.splice(idx, 1);
+        const j = i + Math.floor(Math.random() * (90 - i));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+        nums.push(pool[i]);
       }
       return { numbers: nums.sort((a, b) => a - b), superstar: null };
     });
@@ -258,10 +258,10 @@ const Schedina: React.FC<SchedinaProps> = ({
 
           <div className="text-xs font-bold" style={{ color: '#333', fontFamily: 'Arial, sans-serif' }}>
             Colonne: <span style={{ color: '#c41e2a' }}>{filledColumns}/4</span> ·
-            Costo: <span style={{ color: '#c41e2a' }}>€{(filledColumns + columns.filter((c) => c.superstar != null).length * 0.5).toFixed(2).replace('.', ',')}</span>
+            Costo: <span style={{ color: '#c41e2a' }}>€{(filledColumns + columns.filter((c) => c.numbers.length === 6 && c.superstar != null).length * 0.5).toFixed(2).replace('.', ',')}</span>
           </div>
 
-          <div className="flex items-center gap-1" style={{ color: '#999', fontSize: '9px' }}>
+          <div className="flex items-center gap-1" style={{ color: '#999', fontSize: '11px' }}>
             <span style={{ color: '#c41e2a', fontWeight: 900, fontFamily: 'Arial, sans-serif', fontSize: '11px' }}>✱</span>
             <span style={{ fontFamily: 'Arial, sans-serif', fontWeight: 700 }}>Sisal</span>
           </div>

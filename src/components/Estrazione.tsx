@@ -59,10 +59,15 @@ const Estrazione: React.FC<EstrazioneProps> = ({ extraction, isAnimating, reveal
       <div className="flex gap-8 items-center mt-2">
         <div className="flex flex-col items-center gap-1.5">
           <span className="text-xs font-semibold tracking-wider text-muted-foreground">JOLLY</span>
+          {(() => {
+            const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            return (
           <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={revealedCount > 6 ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+            initial={prefersReduced ? { opacity: 0 } : { scale: 0, opacity: 0 }}
+            animate={revealedCount > 6
+              ? (prefersReduced ? { opacity: 1 } : { scale: 1, opacity: 1 })
+              : (prefersReduced ? { opacity: 0 } : { scale: 0, opacity: 0 })}
+            transition={prefersReduced ? { duration: 0.15 } : { type: 'spring', stiffness: 260, damping: 20 }}
             className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg"
             style={{
               background: 'linear-gradient(135deg, hsl(45 100% 51%), hsl(30 100% 50%))',
@@ -72,14 +77,21 @@ const Estrazione: React.FC<EstrazioneProps> = ({ extraction, isAnimating, reveal
           >
             {revealedCount > 6 ? extraction.jolly : '?'}
           </motion.div>
+            );
+          })()}
         </div>
 
         <div className="flex flex-col items-center gap-1.5">
           <span className="text-xs font-semibold tracking-wider text-destructive">SUPERSTAR</span>
+          {(() => {
+            const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            return (
           <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={revealedCount > 7 ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+            initial={prefersReduced ? { opacity: 0 } : { scale: 0, opacity: 0 }}
+            animate={revealedCount > 7
+              ? (prefersReduced ? { opacity: 1 } : { scale: 1, opacity: 1 })
+              : (prefersReduced ? { opacity: 0 } : { scale: 0, opacity: 0 })}
+            transition={prefersReduced ? { duration: 0.15 } : { type: 'spring', stiffness: 260, damping: 20 }}
             className="w-12 h-12 flex items-center justify-center text-white font-bold text-lg"
             style={{
               background: 'linear-gradient(135deg, hsl(0 80% 55%), hsl(0 90% 30%))',
@@ -92,6 +104,8 @@ const Estrazione: React.FC<EstrazioneProps> = ({ extraction, isAnimating, reveal
           >
             {revealedCount > 7 ? extraction.superstar : '?'}
           </motion.div>
+            );
+          })()}
         </div>
       </div>
     </div>

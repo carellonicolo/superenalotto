@@ -42,7 +42,7 @@ const RegoleModal: React.FC = () => {
               <h3 className="font-bold text-base mb-2 flex items-center gap-2" style={{ color: '#c41e2a' }}>
                 🎯 Come si gioca
               </h3>
-              <ul className="space-y-1.5 text-gray-700 list-disc pl-5">
+              <ul className="space-y-1.5 text-muted-foreground list-disc pl-5">
                 <li>Scegli <strong>6 numeri</strong> da <strong>1 a 90</strong> su ciascuna colonna della schedina.</li>
                 <li>In questo simulatore la schedina ha <strong>4 colonne</strong> giocabili, organizzate in 4 pannelli (A, B, C, D).</li>
                 <li>Il costo di ciascuna colonna è di <strong>€1,00</strong>.</li>
@@ -55,7 +55,7 @@ const RegoleModal: React.FC = () => {
               <h3 className="font-bold text-base mb-2 flex items-center gap-2" style={{ color: '#c41e2a' }}>
                 🎰 Le Estrazioni
               </h3>
-              <ul className="space-y-1.5 text-gray-700 list-disc pl-5">
+              <ul className="space-y-1.5 text-muted-foreground list-disc pl-5">
                 <li>Le estrazioni del SuperEnalotto si svolgono <strong>quattro volte a settimana</strong>: martedì, giovedì, venerdì e sabato alle ore 20:00.</li>
                 <li>Vengono estratti <strong>6 numeri</strong> principali da 1 a 90.</li>
                 <li>Viene poi estratto il <strong>numero Jolly</strong> tra i restanti 84 numeri.</li>
@@ -88,12 +88,12 @@ const RegoleModal: React.FC = () => {
                     ].map((row, i) => (
                       <tr
                         key={i}
-                        className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
+                        className={i % 2 === 0 ? 'bg-secondary/50' : 'bg-background/50'}
                         style={{ borderBottom: '1px solid #e5e7eb' }}
                       >
-                        <td className="px-3 py-2 font-bold" style={{ color: '#1a3a6b' }}>{row.cat}</td>
-                        <td className="px-3 py-2 text-gray-600">{row.desc}</td>
-                        <td className="px-3 py-2 text-right font-mono text-gray-500">{row.prob}</td>
+                        <td className="px-3 py-2 font-bold text-primary">{row.cat}</td>
+                        <td className="px-3 py-2 text-muted-foreground">{row.desc}</td>
+                        <td className="px-3 py-2 text-right font-mono text-muted-foreground/70">{row.prob}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -106,7 +106,7 @@ const RegoleModal: React.FC = () => {
               <h3 className="font-bold text-base mb-2 flex items-center gap-2" style={{ color: '#c41e2a' }}>
                 💰 Il Jackpot
               </h3>
-              <ul className="space-y-1.5 text-gray-700 list-disc pl-5">
+              <ul className="space-y-1.5 text-muted-foreground list-disc pl-5">
                 <li>Il Jackpot parte da un minimo di <strong>€2.000.000</strong> e cresce ad ogni estrazione senza vincitori con "6".</li>
                 <li>Il Jackpot viene assegnato a chi indovina tutti e <strong>6 i numeri estratti</strong>.</li>
                 <li>Se nessuno indovina il "6", il montepremi viene accumulato per l'estrazione successiva.</li>
@@ -119,7 +119,7 @@ const RegoleModal: React.FC = () => {
               <h3 className="font-bold text-base mb-2 flex items-center gap-2" style={{ color: '#c41e2a' }}>
                 ⭐ SuperStar
               </h3>
-              <ul className="space-y-1.5 text-gray-700 list-disc pl-5">
+              <ul className="space-y-1.5 text-muted-foreground list-disc pl-5">
                 <li>Il SuperStar è un'opzione aggiuntiva che <strong>moltiplica le vincite</strong> delle categorie inferiori.</li>
                 <li>Se il tuo numero SuperStar coincide con quello estratto, le vincite vengono aumentate.</li>
                 <li>Con il SuperStar puoi vincere anche solo indovinando <strong>0 numeri + SuperStar</strong> (vincita di €5) oppure <strong>1 numero + SuperStar</strong> (vincita di €10).</li>
@@ -132,7 +132,7 @@ const RegoleModal: React.FC = () => {
               <h3 className="font-bold text-base mb-2 flex items-center gap-2" style={{ color: '#c41e2a' }}>
                 📊 Distribuzione del Montepremi
               </h3>
-              <ul className="space-y-1.5 text-gray-700 list-disc pl-5">
+              <ul className="space-y-1.5 text-muted-foreground list-disc pl-5">
                 <li>Il <strong>34,4%</strong> della raccolta va al montepremi.</li>
                 <li>Il montepremi viene suddiviso tra le varie categorie di vincita in percentuali fisse.</li>
                 <li>Se in una categoria non ci sono vincitori, la quota viene ripartita nelle categorie inferiori o accumulata.</li>
@@ -141,10 +141,9 @@ const RegoleModal: React.FC = () => {
 
             {/* Nota didattica */}
             <section
-              className="p-3 rounded-lg"
-              style={{ background: '#fff3cd', border: '1px solid #ffc107' }}
+              className="p-3 rounded-lg bg-accent/50 border border-border"
             >
-              <p className="text-xs text-gray-700">
+              <p className="text-xs text-muted-foreground">
                 <strong>⚠️ Nota didattica:</strong> Questo simulatore è creato esclusivamente a scopo educativo per lo studio della probabilità e della statistica.
                 Il gioco d'azzardo può creare dipendenza. Il SuperEnalotto è gestito da <strong>Sisal S.p.A.</strong> su concessione dell'Agenzia delle Dogane e dei Monopoli.
                 Gioca responsabilmente. Per informazioni: <strong>www.adm.gov.it</strong>.
