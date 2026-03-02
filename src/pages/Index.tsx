@@ -13,6 +13,7 @@ import ProbabilitaPanel from '@/components/ProbabilitaPanel';
 import FormuleCombinatorie from '@/components/FormuleCombinatorie';
 import SimulazioneVeloce from '@/components/SimulazioneVeloce';
 import StatisticheDashboard, { type GameRecord } from '@/components/StatisticheDashboard';
+import DisclaimerModal from '@/components/DisclaimerModal';
 import {
   type ColumnSelection,
   type ExtractionResult,
