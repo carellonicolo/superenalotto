@@ -32,10 +32,11 @@ export const WIN_CATEGORIES: { category: WinCategory; description: string; match
 ];
 
 // Average prizes (approximate, based on typical jackpot distributions)
+// Quote medie ufficiali (fonte: superenalotto.it)
 export const AVERAGE_PRIZES: Record<WinCategory, number> = {
   '6': 100_000_000,
-  '5+1': 500_000,
-  '5': 50_000,
+  '5+1': 620_000,
+  '5': 32_000,
   '4': 300,
   '3': 25,
   '2': 5,
@@ -110,30 +111,25 @@ export function calculateProbability(category: WinCategory): { probability: numb
 }
 
 // Generate a random extraction
+// Fisher-Yates shuffle for O(1) per pick (optimized for Monte Carlo)
 export function generateExtraction(): ExtractionResult {
   const pool = Array.from({ length: 90 }, (_, i) => i + 1);
-  const numbers: number[] = [];
 
-  // Extract 6 numbers
-  for (let i = 0; i < 6; i++) {
-    const idx = Math.floor(Math.random() * pool.length);
-    numbers.push(pool[idx]);
-    pool.splice(idx, 1);
+  // Fisher-Yates: shuffle first 7 positions (6 main + 1 jolly)
+  for (let i = 0; i < 7; i++) {
+    const j = i + Math.floor(Math.random() * (90 - i));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
   }
 
-  // Jolly from remaining
-  const jollyIdx = Math.floor(Math.random() * pool.length);
-  const jolly = pool[jollyIdx];
-  pool.splice(jollyIdx, 1);
-
-  // SuperStar: any number 1-90
+  const numbers = pool.slice(0, 6).sort((a, b) => a - b);
+  const jolly = pool[6];
   const superstar = Math.floor(Math.random() * 90) + 1;
 
-  return { numbers: numbers.sort((a, b) => a - b), jolly, superstar };
+  return { numbers, jolly, superstar };
 }
 
 // Check matches for a column
-export function checkMatches(column: ColumnSelection, extraction: ExtractionResult): MatchResult & { columnIndex: number } {
+export function checkMatches(column: ColumnSelection, extraction: ExtractionResult, columnIndex = 0): MatchResult {
   const matched = column.numbers.filter(n => extraction.numbers.includes(n));
   const jollyMatch = column.numbers.includes(extraction.jolly);
   const superstarMatch = column.superstar != null && column.superstar === extraction.superstar;
@@ -148,7 +144,7 @@ export function checkMatches(column: ColumnSelection, extraction: ExtractionResu
 
   const prize = category ? AVERAGE_PRIZES[category] : 0;
 
-  return { columnIndex: 0, matched, jollyMatch, superstarMatch, category, prize };
+  return { columnIndex, matched, jollyMatch, superstarMatch, category, prize };
 }
 
 // Run fast simulation

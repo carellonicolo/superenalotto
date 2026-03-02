@@ -98,9 +98,9 @@ const FormuleCombinatorie: React.FC = () => {
           <KaTeX math="E[V] = \sum_{i} P(\text{cat}_i) \cdot \text{Premio}(\text{cat}_i)" display className="text-foreground" />
         </div>
         <p className="text-xs text-destructive font-bold mt-2 text-center">
-          Il valore atteso è circa €0,35 per ogni €1,00 giocato.
+          Il valore atteso è circa €0,30 per ogni €1,00 giocato.
           <br />
-          <span className="opacity-80">Il banco trattiene mediamente il 65% delle giocate!</span>
+          <span className="opacity-80">Il banco trattiene mediamente il 70% delle giocate!</span>
         </p>
       </div>
     </div>

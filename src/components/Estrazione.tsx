@@ -31,22 +31,28 @@ const Estrazione: React.FC<EstrazioneProps> = ({ extraction, isAnimating, reveal
 
       <div className="flex gap-3 flex-wrap justify-center">
         <AnimatePresence>
-          {extraction.numbers.map((num, idx) => (
-            <motion.div
-              key={`main-${idx}`}
-              initial={{ scale: 0, rotate: -180, opacity: 0 }}
-              animate={idx < revealedCount ? { scale: 1, rotate: 0, opacity: 1 } : { scale: 0, rotate: -180, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white font-bold text-xl"
-              style={{
-                background: BallColor(idx),
-                boxShadow: '0 4px 20px hsl(0 0% 0% / 0.4), inset 0 -2px 5px hsl(0 0% 0% / 0.2), inset 0 2px 5px hsl(0 0% 100% / 0.25)',
-                fontFamily: "'Space Grotesk', sans-serif",
-              }}
-            >
-              {idx < revealedCount ? num : '?'}
-            </motion.div>
-          ))}
+          {extraction.numbers.map((num, idx) => {
+            const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            return (
+              <motion.div
+                key={`main-${idx}`}
+                initial={prefersReduced ? { opacity: 0 } : { scale: 0, rotate: -180, opacity: 0 }}
+                animate={idx < revealedCount
+                  ? (prefersReduced ? { opacity: 1 } : { scale: 1, rotate: 0, opacity: 1 })
+                  : (prefersReduced ? { opacity: 0 } : { scale: 0, rotate: -180, opacity: 0 })}
+                transition={prefersReduced ? { duration: 0.15 } : { type: 'spring', stiffness: 260, damping: 20 }}
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white font-bold text-xl"
+                aria-label={idx < revealedCount ? `Numero estratto ${num}` : 'Numero non ancora estratto'}
+                style={{
+                  background: BallColor(idx),
+                  boxShadow: '0 4px 20px hsl(0 0% 0% / 0.4), inset 0 -2px 5px hsl(0 0% 0% / 0.2), inset 0 2px 5px hsl(0 0% 100% / 0.25)',
+                  fontFamily: "'Space Grotesk', sans-serif",
+                }}
+              >
+                {idx < revealedCount ? num : '?'}
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </div>
 

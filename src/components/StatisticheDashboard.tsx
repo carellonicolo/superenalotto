@@ -33,11 +33,15 @@ const StatisticheDashboard: React.FC<StatisticheDashboardProps> = ({ history }) 
   const totalSpent = history.reduce((sum, g) => sum + g.cost, 0);
   const totalWon = history.reduce((sum, g) => sum + g.totalWon, 0);
 
-  const balanceData = history.map((g, idx) => {
-    const cumSpent = history.slice(0, idx + 1).reduce((s, x) => s + x.cost, 0);
-    const cumWon = history.slice(0, idx + 1).reduce((s, x) => s + x.totalWon, 0);
-    return { giocata: idx + 1, bilancio: cumWon - cumSpent, speso: cumSpent, vinto: cumWon };
-  });
+  // O(n) cumulative calculation
+  const balanceData: { giocata: number; bilancio: number; speso: number; vinto: number }[] = [];
+  let cumSpent = 0;
+  let cumWon = 0;
+  for (let idx = 0; idx < history.length; idx++) {
+    cumSpent += history[idx].cost;
+    cumWon += history[idx].totalWon;
+    balanceData.push({ giocata: idx + 1, bilancio: cumWon - cumSpent, speso: cumSpent, vinto: cumWon });
+  }
 
   const numFrequency: Record<number, number> = {};
   history.forEach((g) => {
