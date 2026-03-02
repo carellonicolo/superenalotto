@@ -89,9 +89,11 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
                     key={num}
                     disabled={disabled || cantSelect}
                     onClick={() => onToggleNumber(num)}
+                    aria-label={`Numero ${num}${selected ? ', selezionato' : ''}${matched ? ', indovinato' : ''}`}
+                    aria-pressed={selected}
                     className={cn(
                       'flex-1 aspect-square flex items-center justify-center border border-gray-200 transition-all duration-75',
-                      'hover:bg-green-200 focus:outline-none',
+                      'hover:bg-green-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:z-10',
                       'text-[9px] sm:text-[11px] lg:text-[12px] font-medium leading-none',
                       selected && !matched && 'bg-red-600 text-white border-red-600',
                       matched && 'bg-green-500 text-white border-green-600 ring-1 ring-green-400',
@@ -149,7 +151,7 @@ const SchedinaColumn: React.FC<SchedinaColumnProps> = ({
           </div>
         )}
         {!superstarSelected && (
-          <div className="mt-1 text-[7px] text-center font-bold" style={{ color: '#8b0000' }}>
+          <div className="mt-1 text-[11px] text-center font-bold" style={{ color: '#8b0000' }}>
             Scegli
           </div>
         )}

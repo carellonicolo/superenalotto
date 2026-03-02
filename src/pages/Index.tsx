@@ -66,8 +66,7 @@ const Index: React.FC = () => {
         setTimeout(() => {
           const results = safeColumns.map((col, idx) => {
             if (col.numbers.length !== 6) return { columnIndex: idx, matched: [], jollyMatch: false, superstarMatch: false, category: null, prize: 0 };
-            const result = checkMatches(col, ext);
-            return { ...result, columnIndex: idx };
+            return checkMatches(col, ext, idx);
           });
 
           const matched = safeColumns.map((col) => {

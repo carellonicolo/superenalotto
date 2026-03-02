@@ -14,11 +14,6 @@ interface SchedinaProps {
   disabled?: boolean;
 }
 
-const PANEL_LABELS = [
-'PANNELLO A', 'PANNELLO A',
-'PANNELLO B', 'PANNELLO B',
-'PANNELLO C', 'PANNELLO C',
-'PANNELLO D', 'PANNELLO D'];
 
 
 const Schedina: React.FC<SchedinaProps> = ({
@@ -143,7 +138,7 @@ const Schedina: React.FC<SchedinaProps> = ({
             <div
               style={{
                 color: '#e8f5e9',
-                fontSize: '7px',
+                fontSize: '11px',
                 fontFamily: 'Arial, sans-serif',
                 letterSpacing: '0.05em',
                 textTransform: 'uppercase'
@@ -208,20 +203,22 @@ const Schedina: React.FC<SchedinaProps> = ({
                       <button
                         onClick={() => handleQuickPick(colIdx)}
                         disabled={disabled}
-                        className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
+                        aria-label={`Selezione casuale colonna ${colIdx + 1}`}
+                        className="text-[11px] px-1.5 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5 focus-visible:ring-2 focus-visible:ring-primary"
                         title="Casuale">
                         
-                        <Shuffle className="w-2 h-2" /> Auto
+                        <Shuffle className="w-2.5 h-2.5" /> Auto
                       </button>
                       <button
                         onClick={() => handleClear(colIdx)}
                         disabled={disabled}
-                        className="text-[7px] px-1 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5"
+                        aria-label={`Cancella colonna ${colIdx + 1}`}
+                        className="text-[11px] px-1.5 py-0.5 rounded bg-white/60 hover:bg-white/90 disabled:opacity-40 flex items-center gap-0.5 focus-visible:ring-2 focus-visible:ring-primary"
                         title="Cancella">
                         
-                        <Trash2 className="w-2 h-2" /> ✕
+                        <Trash2 className="w-2.5 h-2.5" /> ✕
                       </button>
-                      <span className="text-[7px] font-bold px-1 py-0.5" style={{ color: col.numbers.length === 6 ? '#c41e2a' : '#333' }}>
+                      <span className="text-[11px] font-bold px-1 py-0.5" style={{ color: col.numbers.length === 6 ? '#c41e2a' : '#333' }}>
                         {col.numbers.length}/6
                       </span>
                     </div>
@@ -244,14 +241,16 @@ const Schedina: React.FC<SchedinaProps> = ({
             <button
               onClick={handleQuickPickAll}
               disabled={disabled}
-              className="text-[9px] px-2 py-1 rounded font-bold bg-green-700 text-white hover:bg-green-800 disabled:opacity-40 flex items-center gap-1">
+              aria-label="Selezione casuale per tutte le colonne"
+              className="text-[11px] px-2 py-1 rounded font-bold bg-green-700 text-white hover:bg-green-800 disabled:opacity-40 flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-primary">
               
               <Shuffle className="w-3 h-3" /> Tutte Casuali
             </button>
             <button
               onClick={handleClearAll}
               disabled={disabled}
-              className="text-[9px] px-2 py-1 rounded font-bold bg-gray-500 text-white hover:bg-gray-600 disabled:opacity-40 flex items-center gap-1">
+              aria-label="Cancella tutte le colonne"
+              className="text-[11px] px-2 py-1 rounded font-bold bg-gray-500 text-white hover:bg-gray-600 disabled:opacity-40 flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-primary">
               
               <Trash2 className="w-3 h-3" /> Cancella
             </button>

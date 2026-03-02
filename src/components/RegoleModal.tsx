@@ -44,7 +44,7 @@ const RegoleModal: React.FC = () => {
               </h3>
               <ul className="space-y-1.5 text-gray-700 list-disc pl-5">
                 <li>Scegli <strong>6 numeri</strong> da <strong>1 a 90</strong> su ciascuna colonna della schedina.</li>
-                <li>Ogni schedina ha fino a <strong>8 colonne</strong> giocabili, organizzate in 4 pannelli (A, B, C, D).</li>
+                <li>In questo simulatore la schedina ha <strong>4 colonne</strong> giocabili, organizzate in 4 pannelli (A, B, C, D).</li>
                 <li>Il costo di ciascuna colonna è di <strong>€1,00</strong>.</li>
                 <li>Puoi aggiungere l'opzione <strong>SuperStar</strong> al costo aggiuntivo di <strong>€0,50</strong> per colonna, scegliendo un numero da 1 a 90.</li>
               </ul>
@@ -56,7 +56,7 @@ const RegoleModal: React.FC = () => {
                 🎰 Le Estrazioni
               </h3>
               <ul className="space-y-1.5 text-gray-700 list-disc pl-5">
-                <li>Le estrazioni del SuperEnalotto si svolgono <strong>tre volte a settimana</strong>: martedì, giovedì e sabato alle ore 20:00.</li>
+                <li>Le estrazioni del SuperEnalotto si svolgono <strong>quattro volte a settimana</strong>: martedì, giovedì, venerdì e sabato alle ore 20:00.</li>
                 <li>Vengono estratti <strong>6 numeri</strong> principali da 1 a 90.</li>
                 <li>Viene poi estratto il <strong>numero Jolly</strong> tra i restanti 84 numeri.</li>
                 <li>Infine viene estratto il <strong>numero SuperStar</strong> (un numero da 1 a 90, estratto indipendentemente).</li>
