@@ -168,36 +168,32 @@ const Index: React.FC = () => {
           </div>
         )}
 
-        {/* Tabs */}
-        <Tabs defaultValue="probabilita" className="w-full">
-          <TabsList className="w-full grid grid-cols-4 bg-secondary/50 backdrop-blur-sm border border-border rounded-xl p-1 h-auto">
-            <TabsTrigger value="probabilita" className="text-xs sm:text-sm py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all">
-              📊 Probabilità
-            </TabsTrigger>
-            <TabsTrigger value="formule" className="text-xs sm:text-sm py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all">
-              📐 Formule
-            </TabsTrigger>
-            <TabsTrigger value="simulazione" className="text-xs sm:text-sm py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all">
-              ⚡ Simulazione
-            </TabsTrigger>
-            <TabsTrigger value="statistiche" className="text-xs sm:text-sm py-2.5 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg transition-all">
-              📈 Statistiche
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="probabilita">
-            <ProbabilitaPanel />
-          </TabsContent>
-          <TabsContent value="formule">
-            <FormuleCombinatorie />
-          </TabsContent>
-          <TabsContent value="simulazione">
-            <SimulazioneVeloce columns={columns} />
-          </TabsContent>
-          <TabsContent value="statistiche">
-            <StatisticheDashboard history={gameHistory} />
-          </TabsContent>
-        </Tabs>
+        {/* Section Buttons */}
+        <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {[
+            { icon: '📊', label: 'Probabilità', content: <ProbabilitaPanel /> },
+            { icon: '📐', label: 'Formule', content: <FormuleCombinatorie /> },
+            { icon: '⚡', label: 'Simulazione', content: <SimulazioneVeloce columns={columns} /> },
+            { icon: '📈', label: 'Statistiche', content: <StatisticheDashboard history={gameHistory} /> },
+          ].map((item) => (
+            <Dialog key={item.label}>
+              <DialogTrigger asChild>
+                <button className="text-xs sm:text-sm py-2.5 px-3 rounded-xl font-medium bg-secondary/50 backdrop-blur-sm border border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:shadow-lg transition-all flex items-center justify-center gap-1.5">
+                  {item.icon} {item.label}
+                </button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl w-[95vw] max-h-[90vh] p-0">
+                <DialogHeader className="px-6 pt-6 pb-2">
+                  <DialogTitle className="text-lg font-bold">
+                    {item.icon} {item.label}
+                  </DialogTitle>
+                </DialogHeader>
+                <ScrollArea className="px-6 pb-6 max-h-[75vh]">
+                  {item.content}
+                </ScrollArea>
+              </DialogContent>
+            </Dialog>
+          ))}
       </div>
 
       {/* Footer */}
